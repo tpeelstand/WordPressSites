@@ -10,13 +10,143 @@ Version: 1.5.45.1532616143
 Updated: 2018-07-26 14:42:23
 
 */
+body {
+	color: #333;
+}
+.color7 {color: #009000;}
+i.fa.icon.reverse.color7 {
+    background-color: #009000;
+}
+.bold {font-weight: 800;}
+.large-text {
+	font-size: 22px;
+}
 
-.color7 {
-    background-color: #01A501 !important;
+/* Post Styles */
+.post-item {
+	padding: 2rem;
+	border: none;
+	
 }
-.address {
-	list-style: none;
+.ui-accordion-header {
+   
 }
-.address-card {
-	height: 400px;
+.ui-accordion-header:hover {
+	cursor: pointer;
 }
+
+/* Accordidon Updates */
+.ui-accordion-content p {
+	-webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+	
+}
+/* Responsive */
+@media screen and (max-width: 767px) {
+	.logo_col {
+		width: 75%;
+	}
+	i.fa.icon.reverse.large {
+		font-size: 2em;
+	}
+	i.fa.icon {
+		margin-bottom: 0;
+	}
+	.header-wrapper > div[class*=header] {
+		display: none;
+	}
+	.page-content{
+		padding-top: 0;
+		padding-bottom: 0;
+		background-image: url(http://localhost/wordpress/ResourceSolutions/wordpress/wp-content/uploads/2018/07/daylight-environment-flora-dark.jpg);
+		background-position: center center;
+		background-size: cover;		
+		background-color: rgba(0,0,0, 1);
+}
+	.icon-box_full, h1.hero-title, p.header-subtitle2, p.header-subtitle {
+		display: none;
+	}
+	
+	.header-top {
+		margin-bottom: 19px;
+	}	
+	.header-homepage .header-description-row {
+			padding-top: 100%;
+			padding-bottom: 100%;
+	}	
+	.m-content-box {
+		padding: 15px 10px;
+		margin-top: 60px;
+	}
+	 .m-content-box_content {
+		border-bottom: 1px solid rgba(255, 255, 255, .25);
+		height: 20vh;
+	}
+	.m-content-box_mobile-last {
+		border-bottom: 1px solid transparent;
+	}
+	
+	.m-recycle-text {
+		padding: 6px;
+    margin: 5px 0 -10px 0;
+    color: #f7f7f7;
+		font-size: 1.75em;
+		text-shadow: 1px 1px 1px #222;
+    font-weight: bold;
+		font-variant: all-petite-caps;
+		display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: .2em;
+		background: rgba(0,0,0,.25);
+	}
+	.icon-mobile_icon {
+		border: 1px solid rgba(0, 0, 0, .35);
+		margin-right: 15px
+	}
+	.mobile-heading {
+		font-size: 20px;
+		font-weight: bold;
+		text-decoration: none;
+    color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+		width: 100%;
+    text-shadow: 2px 1px 4px #222;
+	}
+	.heading-text {
+		width: auto;
+		margin: auto;
+	}
+	.sub-header_mobile {
+		color: #f7f7f7;
+	}
+	.footer .row:not(.no-spacing) > div:not(.no-gutter-col) {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+	.footer-simple .footer-content {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+}
+ 
+@media screen and (min-width: 768px) {
+	.m-content-box {
+		display: none;
+	}
+}
+
+
+@media screen and (max-width: 330px) {
+		.large-text {
+			font-size: 18px;
+	}
+	.mobile-heading {
+		font-size: 16px;
+	}
+} 
