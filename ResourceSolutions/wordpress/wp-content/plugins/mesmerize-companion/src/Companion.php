@@ -1393,6 +1393,10 @@ class Companion
         
         $query   = isset($context['query']) ? $context['query'] : array();
         $content = "";
+        
+        do_action('cloudpress\customizer\before_render_shortcode', $shortcode);
+        $content = apply_filters('cloudpress\customizer\before_render_shortcode_content', $content, $shortcode);
+        
         if (count($query)) {
             query_posts($query);
             while (have_posts()) {
@@ -1404,6 +1408,9 @@ class Companion
         } else {
             $content .= do_shortcode($shortcode);
         }
+        
+        do_action('cloudpress\customizer\after_render_shortcode', $shortcode);
+        $content = apply_filters('cloudpress\customizer\after_render_shortcode_content', $content, $shortcode);
         
         die($content);
         

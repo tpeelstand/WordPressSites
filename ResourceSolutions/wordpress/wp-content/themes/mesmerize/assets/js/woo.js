@@ -17,7 +17,7 @@
 
         var $menu = jQuery('#main_menu');
         var $cart_button = $menu.find('li.mesmerize-menu-cart');
-        var $cart = $cart_button.find('.mesmerize-woo-header-cart');
+        var $cart = jQuery('.mesmerize-woo-header-cart');
         positionateWooCartItem($menu, $cart_button, $cart);
         addCloseCartButton($cart);
 
@@ -66,11 +66,10 @@
     }
 
     function positionateWooCartItem($menu, $cart_button, $cart) {
-
         $menu.parent().append($cart);
         var $menuItems = $menu.find('li').not($cart_button);
 
-        $cart_button.off().on('mouseover', function (event) {
+        $cart_button.children('a').off().on('mouseover', function (event) {
 
             if ($cart.children().length === 0) {
                 return;
@@ -92,7 +91,7 @@
             return;
         }
 
-        var top = $cart_button.offset().top + $cart_button.outerHeight() - $cart_button.closest('div').offset().top ;
+        var top = $cart_button.offset().top + $cart_button.outerHeight() - $cart_button.closest('div').offset().top;
         var position = /*$menu.closest('[data-sticky]') ? "fixed" :*/ "absolute";
 
         if ($cart_button.offset().left < $cart.outerWidth()) {

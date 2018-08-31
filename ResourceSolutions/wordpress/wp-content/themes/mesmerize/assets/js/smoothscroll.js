@@ -207,10 +207,14 @@
                     id: (target.attr('id') || '').trim()
                 };
 
-                element.off('click').on('click', function (event) {
+                element.off('click tap').on('click tap', function (event) {
                     event.preventDefault();
                     event.stopPropagation();
                     scrollItem(elData);
+
+                    if (elData.clickCallback) {
+                        elData.clickCallback.call(this, event);
+                    }
                 });
             }
         });
@@ -226,6 +230,8 @@
                 onChange: function () {
                 },
                 onLeave: function () {
+                },
+                clickCallback: function () {
                 },
                 smoothScrollAnchor: false,
                 offset: 0

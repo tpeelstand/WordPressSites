@@ -43,12 +43,13 @@ function mesmerize_top_bar_social_icons_fields_options($area, $section, $priorit
 
     for ($i = 0; $i < count($default_icons); $i++) {
         mesmerize_add_kirki_field(array(
-            'type'     => 'checkbox',
-            'label'    => sprintf(esc_html__('Show Icon %d', 'mesmerize'), ($i + 1)),
-            'section'  => $section,
-            'priority' => $priority,
-            'settings' => "{$prefix}_social_icon_{$i}_enabled",
-            'default'  => $default_icons[$i]['enabled'],
+            'type'      => 'checkbox',
+            'label'     => sprintf(esc_html__('Show Icon %d', 'mesmerize'), ($i + 1)),
+            'section'   => $section,
+            'priority'  => $priority,
+            'settings'  => "{$prefix}_social_icon_{$i}_enabled",
+            'default'   => $default_icons[$i]['enabled'],
+            'transport' => 'postMessage',
         ));
 
         $active_callback = array(
@@ -68,6 +69,7 @@ function mesmerize_top_bar_social_icons_fields_options($area, $section, $priorit
             'section'         => $section,
             'priority'        => $priority,
             'default'         => $default_icons[$i]['icon'],
+            'transport'       => 'postMessage',
             'active_callback' => $active_callback,
 
         ));
@@ -94,7 +96,7 @@ function mesmerize_top_bar_social_icons_fields_options($area, $section, $priorit
         'label'           => esc_html__('Social Icons Options', 'mesmerize'),
         'section'         => $section,
         'priority'        => $priority,
-        "choices"         => $group_choices,
+        'choices'         => $group_choices,
         'active_callback' => array(
             array(
                 'setting'  => "{$prefix}_content",
@@ -102,7 +104,7 @@ function mesmerize_top_bar_social_icons_fields_options($area, $section, $priorit
                 'value'    => 'social',
             ),
             array(
-                'setting'  => "enable_top_bar",
+                'setting'  => 'enable_top_bar',
                 'operator' => '==',
                 'value'    => true,
             ),
@@ -119,7 +121,7 @@ function mesmerize_top_bar_social_icons_fields_options($area, $section, $priorit
 add_action("mesmerize_header_top_bar_content_print", function ($areaName, $type) {
     if ($type == 'social') {
         $defaultIcons = mesmerize_top_bar_default_icons();
-        mesmerize_print_area_social_icons('header_top_bar', $areaName, "top-bar-social-icons", count($defaultIcons), $defaultIcons);
+        mesmerize_print_area_social_icons('header_top_bar', $areaName, 'top-bar-social-icons', count($defaultIcons), $defaultIcons);
     }
 }, 1, 2);
 
@@ -127,34 +129,34 @@ function mesmerize_default_icons()
 {
     return array(
         array(
-            "icon"    => "fa-facebook-official",
-            "link"    => "https://facebook.com",
-            "enabled" => true,
+            'icon'    => 'fa-facebook-official',
+            'link'    => 'https://facebook.com',
+            'enabled' => true,
         ),
         array(
-            "icon"    => "fa-twitter-square",
-            "link"    => "https://twitter.com",
-            "enabled" => true,
+            'icon'    => 'fa-twitter-square',
+            'link'    => 'https://twitter.com',
+            'enabled' => true,
         ),
         array(
-            "icon"    => "fa-instagram",
-            "link"    => "https://instagram.com",
-            "enabled" => true,
+            'icon'    => 'fa-instagram',
+            'link'    => 'https://instagram.com',
+            'enabled' => true,
         ),
         array(
-            "icon"    => "fa-google-plus-square",
-            "link"    => "https://plus.google.com",
-            "enabled" => true,
+            'icon'    => 'fa-google-plus-square',
+            'link'    => 'https://plus.google.com',
+            'enabled' => true,
         ),
         array(
-            "icon"    => "fa-youtube-square",
-            "link"    => "https://www.youtube.com",
-            "enabled" => true,
+            'icon'    => 'fa-youtube-square',
+            'link'    => 'https://www.youtube.com',
+            'enabled' => true,
         ),
     );
 }
 
-function mesmerize_print_area_social_icons($prefix, $area, $class = "social-icons", $max = 4, $defaultIcons = null)
+function mesmerize_print_area_social_icons($prefix, $area, $class = 'social-icons', $max = 4, $defaultIcons = null)
 {
 
 
@@ -180,20 +182,20 @@ function mesmerize_print_area_social_icons($prefix, $area, $class = "social-icon
 
             if ( ! intval($is_enabled)) {
                 $hidden_attr = "data-reiki-hidden='true'";
-                continue;
             }
 
             if ( ! mesmerize_can_show_demo_content() && ! $link) {
                 continue;
             }
 
-            ?>
+            if(mesmerize_is_customize_preview() || (!mesmerize_is_customize_preview() && intval($is_enabled))) {
+              ?>
+              <a target="_blank" <?php echo $hidden_attr ?> class="social-icon" href="<?php echo esc_url($link) ?>">
+                  <i class="fa <?php echo esc_attr($icon) ?>"></i>
+              </a>
+              <?php
+            }
 
-            <a target="_blank" <?php echo $hidden_attr ?> class="social-icon" href="<?php echo esc_url($link) ?>">
-                <i class="fa <?php echo esc_attr($icon) ?>"></i>
-            </a>
-
-            <?php
         }
         ?>
 

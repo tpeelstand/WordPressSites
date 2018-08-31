@@ -23,22 +23,22 @@
         var iconSizes = [
             {
                 value: 'small',
-                label:  window.CP_Customizer.translateCompanionString('Small'),
+                label: window.CP_Customizer.translateCompanionString('Small'),
                 classes: 'small'
             },
             {
                 value: 'normal',
-                label:  window.CP_Customizer.translateCompanionString('Normal'),
+                label: window.CP_Customizer.translateCompanionString('Normal'),
                 classes: ''
             },
             {
                 value: 'big',
-                label:  window.CP_Customizer.translateCompanionString('Large'),
+                label: window.CP_Customizer.translateCompanionString('Large'),
                 classes: 'big'
             },
             {
                 value: 'large',
-                label:  window.CP_Customizer.translateCompanionString('Extra Large'),
+                label: window.CP_Customizer.translateCompanionString('Extra Large'),
                 classes: 'large'
             }
         ];
@@ -112,7 +112,7 @@
             var result = [
 
                 {
-                    label:  window.CP_Customizer.translateCompanionString("Text"),
+                    label: window.CP_Customizer.translateCompanionString("Text"),
                     type: "text",
                     value: $el.text().trim()
                 }
@@ -145,8 +145,8 @@
             var result = [
 
                 {
-                    label: (hasClass ?  window.CP_Customizer.translateCompanionString("Button") :  window.CP_Customizer.translateCompanionString("Link") )
-                            + " " +  window.CP_Customizer.translateCompanionString("Text"),
+                    label: (hasClass ? window.CP_Customizer.translateCompanionString("Button") : window.CP_Customizer.translateCompanionString("Link"))
+                        + " " + window.CP_Customizer.translateCompanionString("Text"),
                     type: "text",
                     value: $el.text().trim()
                 }
@@ -231,16 +231,14 @@
         CP_Customizer.addContainerDataHandler('img', function ($el) {
 
             var mediaType = "image",
-                mediaData = false;
+                mediaData = false,
+                section = CP_Customizer.preview.getNodeSection($el),
+                sectionExports = CP_Customizer.getSectionExports(section),
+                flexible = _.isUndefined(sectionExports.maintainCropPropotion) ? true : sectionExports.maintainCropPropotion;
 
             if ($el.attr('data-size')) {
                 mediaType = "cropable";
                 var size = $el.attr('data-size').split('x');
-
-                var section = CP_Customizer.preview.getNodeSection($el);
-                var sectionExports = CP_Customizer.getSectionExports(section);
-
-                var flexible = _.isUndefined(sectionExports.maintainCropPropotion) ? true : sectionExports.maintainCropPropotion;
 
                 if ($el.is('[data-size-flexible=false]')) {
                     flexible = false;
@@ -251,6 +249,12 @@
                     height: size[1],
                     flexible: flexible
                 };
+            } else {
+                mediaData = {
+                    width: $el.width(),
+                    height: $el.height(),
+                    flexible: flexible
+                }
             }
 
 
@@ -335,7 +339,7 @@
             return !($el.children().is('i.fa') && $el.is('a'));
         });
 
-        var faIconRegexp = /fa\-[a-z\-]+/ig;
+        var faIconRegexp = /fa\-[a-z0-9\-]+/ig;
 
         CP_Customizer.addContainerDataHandler('a i.fa', function ($el) {
 
@@ -346,7 +350,7 @@
                 label: window.CP_Customizer.translateCompanionString("Font Awesome Icon"),
                 mediaType: mediaType,
                 mediaData: mediaData,
-                canHide: true,
+                canHide: ($el.closest('[data-type="group"]').length > 0),
                 type: "linked-icon",
                 value: {
                     icon: $el.attr('class').match(faIconRegexp).pop(),
@@ -361,7 +365,7 @@
 
             if (type === "linked-icon") {
                 var classValue = $el.attr('class');
-                classValue = classValue.replace(/fa\-[a-z\-]+/ig, "") + " " + value.icon;
+                classValue = classValue.replace(/fa\-[a-z0-9\-]+/ig, "") + " " + value.icon;
                 $el.attr('class', classValue);
 
                 $el.parent().attr('href', value.link);
@@ -404,7 +408,7 @@
         }, function ($el, value, type, prop) {
             if (type === "icon") {
                 var classValue = $el.attr('class');
-                classValue = classValue.replace(/fa\-[a-z\-]+/ig, "") + " " + value.icon;
+                classValue = classValue.replace(/fa\-[a-z0-9\-]+/ig, "") + " " + value.icon;
                 $el.attr('class', classValue);
 
                 value.visible = _.isUndefined(value.visible) ? true : value.visible;

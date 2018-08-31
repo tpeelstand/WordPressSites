@@ -44,7 +44,7 @@ div {
 
 div#cp-overlays {
     position: absolute;
-    z-index: 999999;
+    z-index: 50000;
     top: 0px;
 }
 
@@ -171,6 +171,25 @@ div#cp-overlays {
 .node-hover-overlay, .node-content-overlay {
     background-color: rgba(255, 255, 255, 0);
     position: absolute;
+}
+
+.node-hover-overlay .hover-overlay-toolbar {
+    height: 24px;
+    left: 50%;
+    position: absolute;
+    bottom: -12px;
+    transform: translateX(-50%);
+    z-index: 1;
+    background: #0084b8;
+    border-radius: 4px;
+}
+
+.node-hover-overlay .hover-overlay-toolbar i.fa {
+    color: #ffffff;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
 }
 
 .node-hover-overlay .overlay-border {
@@ -1059,7 +1078,7 @@ i.fa[data-parent-id].expanded {
 
 .mce-menu,
 .cp-tinymce-inline {
-    z-index: 1000000 !important;
+    /* z-index: 1000000 !important; */
 }
 
 .mce-menu .first-system-font {
@@ -1148,3 +1167,6 @@ span#mceu_5-preview {
     display: none !important;
 }
 
+[data-reiki-hidden="true"] {
+    display: none !important;
+}

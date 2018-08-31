@@ -18,7 +18,6 @@ add_filter('mesmerize_override_with_thumbnail_image', function ($value) {
     if (isset($post) && $post->post_type === 'page') {
         $value = get_theme_mod('inner_header_show_featured_image', true);
         $value = (intval($value) === 1);
-
     }
 
     return $value;
@@ -31,7 +30,6 @@ add_filter('mesmerize_override_with_thumbnail_image', function ($value) {
     if (isset($post) && $post->post_type === 'post') {
         $value = get_theme_mod('blog_show_post_featured_image', true);
         $value = (intval($value) === 1);
-
     }
 
     return $value;
@@ -39,6 +37,7 @@ add_filter('mesmerize_override_with_thumbnail_image', function ($value) {
 
 
 add_filter("mesmerize_header_background_atts", function ($attrs, $bg_type, $inner) {
+
     if ($bg_type == 'image') {
         $prefix        = $inner ? "inner_header" : "header";
         $bgImage       = $inner ? get_header_image() : get_theme_mod($prefix . '_front_page_image', mesmerize_mod_default($prefix . '_front_page_image'));
@@ -85,12 +84,14 @@ function mesmerize_header_background_mobile_image()
     }
 
     $prefix                 = $inner ? "inner_header" : "header";
-    $bgType                 = get_theme_mod($prefix . '_background_type', $inner ? 'gradient' : 'image');
+    $bgType                 = get_theme_mod($prefix . '_background_type', mesmerize_mod_default($prefix . '_background_type'));
     $bgImageMobile          = $inner ? get_header_image() : get_theme_mod($prefix . '_front_page_image_mobile', false);
     $bgMobilePosition       = get_theme_mod($prefix . "_bg_position_mobile", '50%');
     $bgMobilePositionOffset = get_theme_mod($prefix . "_bg_position_mobile_offset", '0');
 
-    $bgMobilePosition = $bgMobilePosition . " " . $bgMobilePositionOffset . "px";
+    $bgMobilePosition = str_replace(array('%', 'px',), "", $bgMobilePosition);
+
+    $bgMobilePosition = $bgMobilePosition . "% " . $bgMobilePositionOffset . "px";
     ?>
 
     <?php if ($bgType === "image"): ?>
@@ -162,6 +163,7 @@ function mesmerize_header_background_type_image_settings($section, $prefix, $gro
             'default'           => mesmerize_mod_default($prefix . '_front_page_image'),
             "priority"          => 2,
             'group'             => $group,
+            'transport'         => 'postMessage',
             'active_callback'   => array(
                 array(
                     'setting'  => $prefix . '_background_type',
@@ -271,6 +273,7 @@ function mesmerize_header_background_type_image_settings($section, $prefix, $gro
         'section'         => $section,
         'priority'        => 3,
         'default'         => true,
+        'transport'       => 'postMessage',
         'active_callback' => array(
             array(
                 'setting'  => $prefix . '_background_type',
@@ -310,6 +313,7 @@ function mesmerize_header_background_type_image_settings($section, $prefix, $gro
             'sanitize_callback' => 'esc_url_raw',
             "priority"          => 2,
             'group'             => $group,
+            'transport'         => 'postMessage',
             'active_callback'   => array(
                 array(
                     'setting'  => $prefix . '_background_type',

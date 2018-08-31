@@ -31,7 +31,7 @@
                 window.mesmerizeDomReady(function () {
                     jQuery('[data-install-companion-button="true"]').click(function () {
                         var w = window.parent;
-                        w.tb_show('Materialis Companion', '#TB_inline?width=400&height=430&inlineId=mesmerize_homepage');
+                        w.tb_show('Mesmerize Companion', '#TB_inline?width=400&height=430&inlineId=mesmerize_homepage');
                         w.jQuery('#TB_closeWindowButton').hide();
                         w.jQuery('#TB_window').css({
                             'z-index': '5000001',

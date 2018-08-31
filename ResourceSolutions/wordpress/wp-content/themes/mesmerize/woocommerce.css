@@ -1247,7 +1247,6 @@ form.woocommerce-ordering {
 .woocommerce button.button.inverted.outline:hover,
 .woocommerce input.button.inverted.outline:hover,
 .woocommerce #respond input#submit.inverted.outline:hover {
-  color: rgba(255, 255, 255, 0.9);
   border-color: rgba(255, 255, 255, 0.7);
 }
 
@@ -1402,7 +1401,6 @@ form.woocommerce-ordering {
 .woocommerce button.button.secondary.outline:hover,
 .woocommerce input.button.secondary.outline:hover,
 .woocommerce #respond input#submit.secondary.outline:hover {
-  color: rgba(255, 255, 255, 0.9);
   border-color: rgba(49, 52, 57, 0.7);
 }
 
@@ -1752,7 +1750,6 @@ form.woocommerce-ordering {
 .woocommerce input.button.alt.inverted.outline:hover,
 .woocommerce a.added_to_cart.inverted.outline:hover,
 .woocommerce #respond input#submit.alt.inverted.outline:hover {
-  color: rgba(255, 255, 255, 0.9);
   border-color: rgba(255, 255, 255, 0.7);
 }
 
@@ -1922,7 +1919,6 @@ form.woocommerce-ordering {
 .woocommerce input.button.alt.secondary.outline:hover,
 .woocommerce a.added_to_cart.secondary.outline:hover,
 .woocommerce #respond input#submit.alt.secondary.outline:hover {
-  color: rgba(255, 255, 255, 0.9);
   border-color: rgba(49, 52, 57, 0.7);
 }
 

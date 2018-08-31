@@ -5,7 +5,7 @@ function mesmerize_get_column_width_kirki_output($selector, $args = array(), $js
 
     $result = array();
     $base   = array_merge(array(
-        "element"     => ".header-wrapper > div:not(.owl-carousel) {$selector}" ,
+        "element"     => $selector,
         "property"    => null,
         "units"       => "%",
         "media_query" => null,
@@ -142,8 +142,8 @@ function mesmerize_front_page_header_media_box_options($section, $prefix, $prior
         'active_callback' => array(
             array(
                 'setting'  => 'header_content_partial',
-                'operator' => 'contains',
-                'value'    => 'media-on-',
+                'operator' => 'in',
+                'value'    => array('media-on-left', 'media-on-right'),
             ),
         ),
 
@@ -170,7 +170,6 @@ function mesmerize_front_page_header_media_box_options($section, $prefix, $prior
         'width'       => '420',
         'flex_height' => true,
         'flex_width'  => true,
-
         'active_callback' => array(
             array(
                 'setting'  => 'header_content_media',
@@ -198,17 +197,17 @@ function mesmerize_front_page_header_media_box_options($section, $prefix, $prior
 
         'transport' => 'postMessage',
 
-        "output" => array_merge(mesmerize_get_column_width_kirki_output(".header-hero-media", array(
+        "output" => array_merge(mesmerize_get_column_width_kirki_output(".header-homepage:not(.header-slide) .header-hero-media", array(
             "media_query" => "@media only screen and (min-width: 768px)",
-        )), mesmerize_get_column_width_kirki_output(".header-hero-content", array(
+        )), mesmerize_get_column_width_kirki_output(".header-homepage:not(.header-slide) .header-hero-content", array(
             'prefix'      => 'calc(100% - ',
             'suffix'      => ')!important',
             "media_query" => "@media only screen and (min-width: 768px)",
         ))),
 
-        "js_vars"         => array_merge(mesmerize_get_column_width_kirki_output(".header-hero-media", array(
+        "js_vars"         => array_merge(mesmerize_get_column_width_kirki_output(".header-homepage:not(.header-slide) .header-hero-media", array(
             "media_query" => "@media only screen and (min-width: 768px)",
-        ), true), mesmerize_get_column_width_kirki_output(".header-hero-content", array(
+        ), true), mesmerize_get_column_width_kirki_output(".header-homepage:not(.header-slide) .header-hero-content", array(
             'prefix'      => 'calc(100% - ',
             'suffix'      => ')!important',
             "media_query" => "@media only screen and (min-width: 768px)",
@@ -646,9 +645,13 @@ function mesmerize_front_page_header_content_options($section, $prefix, $priorit
                 "value"  => "content-on-center",
                 "fields" => array(
                     'header_text_box_text_align' => 'center',
-                    'header_spacing'             => array(
-                        'top'    => '10%',
-                        'bottom' => '10%',
+                    'header_spacing'             => apply_filters(
+                        'mesmerize_header_content_spacing_partial_update',
+                        array(
+                            'top'    => '10%',
+                            'bottom' => '10%',
+                        ),
+                        1
                     ),
                 ),
             ),
@@ -656,9 +659,13 @@ function mesmerize_front_page_header_content_options($section, $prefix, $priorit
                 "value"  => "content-on-right",
                 "fields" => array(
                     'header_text_box_text_align' => 'right',
-                    'header_spacing'             => array(
-                        'top'    => '10%',
-                        'bottom' => '10%',
+                    'header_spacing'             => apply_filters(
+                        'mesmerize_header_content_spacing_partial_update',
+                        array(
+                            'top'    => '10%',
+                            'bottom' => '10%',
+                        ),
+                        1
                     ),
                 ),
             ),
@@ -666,9 +673,13 @@ function mesmerize_front_page_header_content_options($section, $prefix, $priorit
                 "value"  => "content-on-left",
                 "fields" => array(
                     'header_text_box_text_align' => 'left',
-                    'header_spacing'             => array(
-                        'top'    => '10%',
-                        'bottom' => '10%',
+                    'header_spacing'             => apply_filters(
+                        'mesmerize_header_content_spacing_partial_update',
+                        array(
+                            'top'    => '10%',
+                            'bottom' => '10%',
+                        ),
+                        1
                     ),
                 ),
             ),
@@ -676,9 +687,13 @@ function mesmerize_front_page_header_content_options($section, $prefix, $priorit
                 "value"  => "media-on-right",
                 "fields" => array(
                     'header_text_box_text_align' => 'left',
-                    'header_spacing'             => array(
-                        'top'    => '5%',
-                        'bottom' => '5%',
+                    'header_spacing'             => apply_filters(
+                        'mesmerize_header_content_spacing_partial_update',
+                        array(
+                            'top'    => '5%',
+                            'bottom' => '5%',
+                        ),
+                        2
                     ),
                 ),
             ),
@@ -686,9 +701,13 @@ function mesmerize_front_page_header_content_options($section, $prefix, $priorit
                 "value"  => "media-on-left",
                 "fields" => array(
                     'header_text_box_text_align' => 'left',
-                    'header_spacing'             => array(
-                        'top'    => '5%',
-                        'bottom' => '5%',
+                    'header_spacing'             => apply_filters(
+                        'mesmerize_header_content_spacing_partial_update',
+                        array(
+                            'top'    => '5%',
+                            'bottom' => '5%',
+                        ),
+                        2
                     ),
                 ),
             ),
@@ -731,18 +750,14 @@ function mesmerize_front_page_header_content_options($section, $prefix, $priorit
         'label'    => esc_html__('Content Spacing', 'mesmerize'),
         'section'  => $section,
         'settings' => 'header_spacing',
-
         'default' => mesmerize_mod_default('header_spacing'),
-
         "output" => array(
             array(
                 "element"  => ".header-homepage .header-description-row",
                 "property" => "padding",
             ),
         ),
-
         'transport' => 'postMessage',
-
         'js_vars'         => array(
             array(
                 'element'  => '.header-homepage .header-description-row',
@@ -760,12 +775,7 @@ function mesmerize_front_page_header_content_options($section, $prefix, $priorit
         'label'    => esc_html__('Mobile Content Spacing', 'mesmerize'),
         'section'  => $section,
         'settings' => 'header_spacing_mobile',
-
-        'default' => array(
-            "top"    => "10%",
-            "bottom" => "10%",
-        ),
-
+        'default' => mesmerize_mod_default('header_spacing_mobile'),
         "output" => array(
             array(
                 "element"     => ".header-homepage .header-description-row",
@@ -773,9 +783,7 @@ function mesmerize_front_page_header_content_options($section, $prefix, $priorit
                 "media_query" => "@media screen and (max-width:767px)",
             ),
         ),
-
         'transport' => 'postMessage',
-
         'js_vars'         => array(
             array(
                 'element'     => '.header-homepage .header-description-row',

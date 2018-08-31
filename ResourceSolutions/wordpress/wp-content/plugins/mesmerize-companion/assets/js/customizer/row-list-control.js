@@ -123,11 +123,11 @@
                     var image = $(this).closest('li').find('[data-preview]').attr('data-preview');
                     var imageHTML = image ? '<img class="pro-popup-preview-image" src="' + image + '">' : '';
 
-                    CP_Customizer.popUpInfo( window.CP_Customizer.translateCompanionString('This item requires PRO theme'),
+                    CP_Customizer.popUpInfo(window.CP_Customizer.translateCompanionString('This item requires PRO theme'),
                         '<div class="pro-popup-preview-container">' +
                         '   ' + imageHTML +
-                        '   <h3>' +  window.CP_Customizer.translateCompanionString("This item is available only in the PRO version") + '</h3>' +
-                        '   <p>' +  window.CP_Customizer.translateCompanionString("Please upgrade to the PRO version to use this item and many others.") + '</p>' +
+                        '   <h3>' + window.CP_Customizer.translateCompanionString("This item is available only in the PRO version") + '</h3>' +
+                        '   <p>' + window.CP_Customizer.translateCompanionString("Please upgrade to the PRO version to use this item and many others.") + '</p>' +
                         '   <br/>' +
                         '   <a href="https://extendthemes.com/go/mesmerize-upgrade/" class="button button-orange" target="_blank">' +
                         '' + window.CP_Customizer.translateCompanionString("Upgrade to PRO") + '</a> ' +
@@ -170,7 +170,7 @@
                                 }
                                 wp.customize.instance(name).set(value);
                             } else {
-                                if (type.match('kirki')) {
+                                if (type && type.match('kirki')) {
                                     kirkiSetSettingValue(name, value);
                                 } else {
                                     wp.customize.instance(name).set(value);

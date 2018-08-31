@@ -431,7 +431,7 @@ div#TB_window.ocdie-tbWindow #TB_ajaxContent {
     user-select: none;
 }
 
-div#TB_title {
+div#TB_window.ocdie-tbWindow div#TB_title {
     display: none;
 }
 

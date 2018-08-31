@@ -188,6 +188,8 @@
                                 break;
                         }
                         $(this).trigger('reiki.update_overlays');
+                      
+                        CP_Customizer.hooks.doAction('section_layout_changed', node, toMake);
                         $(this).closest('.overlay-toolbar').trigger('mouseover');
 
                         CP_Customizer.markSave();

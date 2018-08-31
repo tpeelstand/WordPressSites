@@ -229,13 +229,17 @@ function mesmerize_mod_default($name)
         $defaults = mesmerize_get_from_memory('mesmerize_mod_defaults');
     } else {
         $defaults       = mesmerize_theme_defaults();
+
         $current_preset = get_theme_mod('theme_default_preset', WP_DEBUG ? 3 : 1);
+
         if (mesmerize_is_wporg_preview()) {
             $current_preset = 3;
         }
         
         $defaults = $defaults[$current_preset];
         
+        $defaults = apply_filters('mesmerize_theme_defaults', $defaults);
+
         mesmerize_set_in_memory('mesmerize_mod_defaults', $defaults);
     }
     
@@ -373,7 +377,7 @@ function mesmerize_print_archive_entry_class()
     if ($showBigEntry && $hasBigClass) {
         $classes[] = "col-sm-12 col-md-12";
     } else {
-        $postsPerRow = apply_filters('mesmerize_posts_per_row', 2);
+        $postsPerRow = apply_filters('mesmerize_posts_per_row', mesmerize_mod_default('blog_posts_per_row'));
         $classes[]   = "col-sm-12 col-md-" . (12 / intval($postsPerRow));
     }
     
@@ -396,7 +400,7 @@ function mesmerize_print_masonry_col_class($echo = false)
     if ($showBigEntry && $hasBigClass) {
         $class = "col-md-12";
     } else {
-        $postsPerRow = apply_filters('mesmerize_posts_per_row', 2);
+        $postsPerRow = apply_filters('mesmerize_posts_per_row', mesmerize_mod_default('blog_posts_per_row'));
         $class       = "col-sm-12.col-md-" . (12 / intval($postsPerRow));
     }
     
@@ -423,12 +427,19 @@ function mesmerize_print_post_thumb($classes = "")
             if (has_post_thumbnail()) {
                 the_post_thumbnail();
             } else {
+                $preview_image = apply_filters('mesmerize_post_image_preview', false);
+                
                 $placeholder_color = get_theme_mod('blog_post_thumb_placeholder_color', mesmerize_get_theme_colors('color2'));
                 $placeholder_color = maybe_hash_hex_color($placeholder_color);
                 ?>
-                <svg class="mesmerize-post-list-item-thumb-placeholder" width="890" height="580" viewBox="0 0 890 580" preserveAspectRatio="none">
-                    <rect width="890" height="580" style="fill:<?php echo esc_attr($placeholder_color); ?>;"></rect>
-                </svg>
+                
+                <?php if ($preview_image): ?>
+                    <img src="<?php echo esc_attr($preview_image); ?>" class="esmerize-post-list-item-thumb-placeholder">
+                <?php else: ?>
+                    <svg class="mesmerize-post-list-item-thumb-placeholder" width="890" height="580" viewBox="0 0 890 580" preserveAspectRatio="none">
+                        <rect width="890" height="580" style="fill:<?php echo esc_attr($placeholder_color); ?>;"></rect>
+                    </svg>
+                <?php endif; ?>
             <?php } ?>
         </a>
     </div>

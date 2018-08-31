@@ -41,7 +41,7 @@ function mesmerize_top_bar_information_fields_options($area, $section, $priority
         'settings' => "{$prefix}_info_fields_icons_separator",
     ));
 
-    
+
     $mesmerize_top_bar_fields_defaults = mesmerize_top_bar_fields_defaults();
 
     $group_choices                     = array(
@@ -53,24 +53,32 @@ function mesmerize_top_bar_information_fields_options($area, $section, $priority
 
     for ($i = 0; $i < 3; $i++) {
         mesmerize_add_kirki_field(array(
-            'type'     => 'checkbox',
-            'label'    => sprintf(esc_html__('Show Field %d', 'mesmerize'), ($i + 1)),
-            'section'  => $section,
-            'priority' => $priority,
-            'settings' => "{$prefix}_info_field_{$i}_enabled",
-            'default'  => true,
+            'type'      => 'checkbox',
+            'label'     => sprintf(esc_html__('Show Field %d', 'mesmerize'), ($i + 1)),
+            'section'   => $section,
+            'priority'  => $priority,
+            'settings'  => "{$prefix}_info_field_{$i}_enabled",
+            'default'   => true,
+            'transport' => 'postMessage'
         ));
 
         $group_choices[] = "{$prefix}_info_field_{$i}_enabled";
 
         mesmerize_add_kirki_field(array(
-            'type'     => 'font-awesome-icon-control',
-            'settings' => "{$prefix}_info_field_{$i}_icon",
-            'label'    => sprintf(esc_html__('Field %d icon', 'mesmerize'), ($i + 1)),
-            'section'  => $section,
-            'priority' => $priority,
-            'default'  => $mesmerize_top_bar_fields_defaults[$i]['icon'],
-
+            'type'      => 'font-awesome-icon-control',
+            'settings'  => "{$prefix}_info_field_{$i}_icon",
+            'label'     => sprintf(esc_html__('Field %d icon', 'mesmerize'), ($i + 1)),
+            'section'   => $section,
+            'priority'  => $priority,
+            'default'   => $mesmerize_top_bar_fields_defaults[$i]['icon'],
+            'transport' => 'postMessage',
+            'active_callback' => array(
+                array(
+                    'setting'  => "{$prefix}_info_field_{$i}_enabled",
+                    'operator' => '==',
+                    'value'    => true,
+                ),
+            ),
         ));
 
         $group_choices[] = "{$prefix}_info_field_{$i}_icon";
@@ -83,7 +91,14 @@ function mesmerize_top_bar_information_fields_options($area, $section, $priority
             'priority' => $priority,
             'default'  => $mesmerize_top_bar_fields_defaults[$i]['text'],
             'sanitize_callback' => 'mesmerize_wp_kses_post',
-            'transport' => 'postMessage'
+            'transport' => 'postMessage',
+            'active_callback' => array(
+                array(
+                    'setting'  => "{$prefix}_info_field_{$i}_enabled",
+                    'operator' => '==',
+                    'value'    => true,
+                ),
+            ),
         ));
 
         $group_choices[] = "{$prefix}_info_field_{$i}_text";
@@ -128,7 +143,7 @@ add_action("mesmerize_header_top_bar_content_print", function($areaName, $type) 
 
 function mesmerize_print_header_top_bar_info_fields($area)
 {
-   
+
     $defaults = mesmerize_top_bar_fields_defaults();
 
     for ($i = 0; $i < count($defaults); $i++) {
@@ -143,22 +158,25 @@ function mesmerize_print_header_top_bar_info_fields($area)
         $icon       = get_theme_mod("header_top_bar_{$area}_info_field_{$i}_icon", $defaults[$i]['icon']);
         $text       = get_theme_mod("header_top_bar_{$area}_info_field_{$i}_text", $can_show ? $defaults[$i]['text'] : "");
 
+        $hidden_attr = "";
+
         if ( ! intval($is_enabled)) {
-            continue;
+            $hidden_attr = "data-reiki-hidden='true'";
         }
 
         if (!$can_show && !$text) {
             continue;
         }
 
-        ?>
-        <div class="top-bar-field" data-type="group" <?php echo $preview_atts; ?> data-dynamic-mod="true">
-            <i class="fa <?php echo esc_attr($icon) ?>"></i>
-            <span><?php echo mesmerize_wp_kses_post($text); ?></span>
-        </div>
-        <?php
+        if(mesmerize_is_customize_preview() || (!mesmerize_is_customize_preview() && intval($is_enabled))) {
+          ?>
+          <div class="top-bar-field" data-type="group" <?php echo $hidden_attr ?> <?php echo $preview_atts; ?> data-dynamic-mod="true">
+              <i class="fa <?php echo esc_attr($icon) ?>"></i>
+              <span><?php echo mesmerize_wp_kses_post($text); ?></span>
+          </div>
+          <?php
+        }
 
     }
 
 }
-

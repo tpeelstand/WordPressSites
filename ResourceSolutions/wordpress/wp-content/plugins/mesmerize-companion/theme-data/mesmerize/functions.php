@@ -105,8 +105,8 @@ function mesmerize_companion_latest_news($attrs)
                             </a>
                         </h3>
                         <?php the_excerpt(); ?>
-                        <a class="read-more" href="<?php echo get_permalink(); ?>">
-                            <span data-theme="latest_news_read_more"><?php \Mesmerize\Companion::echoMod('latest_news_read_more', 'Read more'); ?></span>
+                        <a class="read-more link" href="<?php echo get_permalink(); ?>">
+                            <?php \Mesmerize\Companion::echoMod('latest_news_read_more', 'Read more'); ?>
                         </a>
                     </div>
                 </div>
@@ -294,18 +294,21 @@ function mesmerize_companion_page_builder_get_css_value($value, $unit = false)
 
 function mesmerize_companion_get_front_page_content($companion)
 {
-    $defaultSections = array(
-        "overlappable-4",
-        "about-1",
-        "features-12-card-bordered",
-        "content-2",
-        "content-3",
-        "portfolio-4",
-        "testimonials-5",
-        "cta-blue-section",
-        "team-2",
-        "blog-section",
-        "contact-1",
+    $defaultSections = apply_filters(
+        'mesmerize_default_sections',
+        array(
+            "overlappable-4",
+            "about-1",
+            "features-12-card-bordered",
+            "content-2",
+            "content-3",
+            "portfolio-4",
+            "testimonials-5",
+            "cta-blue-section",
+            "team-2",
+            "blog-section",
+            "contact-1",
+        )
     );
 
     $alreadyColoredSections = array("contact-1", "cta-blue-section");

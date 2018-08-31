@@ -377,42 +377,52 @@ function mesmerize_woocommerce_cols_css($sel, $cols)
 add_action('wp_enqueue_scripts', 'mesmerize_woocommerce_print_layout');
 function mesmerize_woocommerce_print_layout()
 {
-    $list = array(
-        "list"       => array(
-            "sel"     => ".woocommerce ul.products li.product:not(.in-page-section)",
-            "desktop" => get_theme_mod('woocommerce_list_item_desktop_cols', 4),
-            "tablet"  => get_theme_mod('woocommerce_list_item_tablet_cols', 2),
-        ),
-        "related"    => array(
-            "sel"     => ".woocommerce.single-product .related .products li.product",
-            "desktop" => get_theme_mod('woocommerce_related_list_item_desktop_cols', 4),
-            "tablet"  => get_theme_mod('woocommerce_related_list_item_tablet_cols', 2),
-        ),
-        "upsell"     => array(
-            "sel"     => ".woocommerce.single-product .upsells .products li.product",
-            "desktop" => get_theme_mod('woocommerce_upsells_list_item_desktop_cols', 4),
-            "tablet"  => get_theme_mod('woocommerce_upsells_list_item_tablet_cols', 2),
-        ),
-        "cross_sell" => array(
-            "sel"     => ".woocommerce .cart-collaterals .cross-sells .products li.product",
-            "desktop" => get_theme_mod('woocommerce_cross_sell_list_item_desktop_cols', 2),
-            "tablet"  => get_theme_mod('woocommerce_cross_sell_list_item_tablet_cols', 2),
-        ),
-    );
     
-    $style = "@media (min-width: 768px) {";
-    foreach ($list as $key => $data) {
-        $style .= "\n /** {$data['sel']} - {$data['tablet']} */\n";
-        $style .= mesmerize_woocommerce_cols_css($data['sel'], $data['tablet']);
+    $style = "";
+    if (mesmerize_can_show_cached_value('mesmerize-woo-inline-css')) {
+        $style = mesmerize_get_cached_value('mesmerize-woo-inline-css');
+        $style = "/* cached */\n{$style}";
+    } else {
+        
+        $list = array(
+            "list"       => array(
+                "sel"     => ".woocommerce ul.products li.product:not(.in-page-section)",
+                "desktop" => get_theme_mod('woocommerce_list_item_desktop_cols', 4),
+                "tablet"  => get_theme_mod('woocommerce_list_item_tablet_cols', 2),
+            ),
+            "related"    => array(
+                "sel"     => ".woocommerce.single-product .related .products li.product",
+                "desktop" => get_theme_mod('woocommerce_related_list_item_desktop_cols', 4),
+                "tablet"  => get_theme_mod('woocommerce_related_list_item_tablet_cols', 2),
+            ),
+            "upsell"     => array(
+                "sel"     => ".woocommerce.single-product .upsells .products li.product",
+                "desktop" => get_theme_mod('woocommerce_upsells_list_item_desktop_cols', 4),
+                "tablet"  => get_theme_mod('woocommerce_upsells_list_item_tablet_cols', 2),
+            ),
+            "cross_sell" => array(
+                "sel"     => ".woocommerce .cart-collaterals .cross-sells .products li.product",
+                "desktop" => get_theme_mod('woocommerce_cross_sell_list_item_desktop_cols', 2),
+                "tablet"  => get_theme_mod('woocommerce_cross_sell_list_item_tablet_cols', 2),
+            ),
+        );
+        
+        $style = "@media (min-width: 768px) {";
+        foreach ($list as $key => $data) {
+            $style .= "\n /** {$data['sel']} - {$data['tablet']} */\n";
+            $style .= mesmerize_woocommerce_cols_css($data['sel'], $data['tablet']);
+        }
+        $style .= "}";
+        
+        $style .= "\n@media (min-width: 1024px) {";
+        foreach ($list as $key => $data) {
+            $style .= "\n /** {$data['sel']} - {$data['desktop']} */\n";
+            $style .= mesmerize_woocommerce_cols_css($data['sel'], $data['desktop']);
+        }
+        $style .= "}";
+        
+        mesmerize_cache_value('mesmerize-woo-inline-css', $style);
     }
-    $style .= "}";
-    
-    $style .= "\n@media (min-width: 1024px) {";
-    foreach ($list as $key => $data) {
-        $style .= "\n /** {$data['sel']} - {$data['desktop']} */\n";
-        $style .= mesmerize_woocommerce_cols_css($data['sel'], $data['desktop']);
-    }
-    $style .= "}";
     
     wp_add_inline_style('mesmerize-woo', $style);
 }

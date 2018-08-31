@@ -5,27 +5,27 @@ namespace Mesmerize;
 
 class SidebarGroupButtonControl extends \Kirki_Customize_Control
 {
-    
+
     public $type = "sidebar-button-group";
     public $popupId = '';
     public $in_row_with = array();
-    
+
     public function __construct($manager, $id, $args = array())
     {
         $this->popupId     = uniqid('cp-sidebar-button-group-');
         $this->in_row_with = isset($args['in_row_with']) ? $args['in_row_with'] : array();
         parent::__construct($manager, $id, $args);
     }
-    
+
     public function enqueue()
     {
         
         if ( ! apply_filters('mesmerize_load_bundled_version', true)) {
-            $jsRoot = get_template_directory_uri() . "/customizer/js";
-            wp_enqueue_script('mesmerize-sb-group-button-control', $jsRoot . "/sb-group-button-control.js");
+        	$jsRoot = get_template_directory_uri() . "/customizer/js";
+        	wp_enqueue_script('mesmerize-sb-group-button-control', $jsRoot . "/sb-group-button-control.js");
         }
     }
-    
+
     public function json()
     {
         $fields  = \Kirki::$fields;
@@ -38,20 +38,20 @@ class SidebarGroupButtonControl extends \Kirki_Customize_Control
         if ( ! count($grouped)) {
             $grouped = $this->choices;
         }
-        
+
         $grouped = apply_filters($this->setting->id . "_filter", (array)$this->choices + $grouped);
         
         if (count($grouped)) {
             $this->choices = $grouped;
         }
-        
+
         $json                = parent::json();
         $json['popup']       = $this->popupId;
         $json['in_row_with'] = $this->in_row_with;
-        
+
         return $json;
     }
-    
+
     protected function content_template()
     {
         ?>
@@ -72,6 +72,6 @@ class SidebarGroupButtonControl extends \Kirki_Customize_Control
             <ul class="section-settings-container accordion-section-content no-border"></ul>
         </div>
         <?php
-        
+
     }
 }

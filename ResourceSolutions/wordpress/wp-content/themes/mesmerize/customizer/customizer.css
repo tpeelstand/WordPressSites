@@ -351,6 +351,7 @@ span.item-settings:hover {
 
 li.item.available-item.already-in-page, li.item.available-item.pro-only {
     position: relative;
+    z-index: 1;
 }
 
 .checked-icon {
@@ -1483,7 +1484,8 @@ a.add-item.button-primary {
     -webkit-border-radius: 0;
     border-radius: 0;
     border-color: #ddd;
-    margin-top: 6px
+    margin-top: 6px;
+    margin-bottom: 14px;
 }
 
 .wp-picker-container input[type=text].wp-color-picker {
@@ -1658,4 +1660,8 @@ li#accordion-section-extendthemes_start_from_demo_site h3:before {
     position: absolute;
     right: 0px;
     top: 0;
+}
+
+.customize-control-sidebar-button-group .wp-media-wrapper button {
+    width: 20px;
 }

@@ -9,9 +9,9 @@ add_action("mesmerize_customize_register_options", function () {
 function mesmerize_navigation_general_options($inner = false)
 {
     $priority       = 1;
-    $section        = $inner ? "inner_page_navigation" : "front_page_navigation";
-    $prefix         = $inner ? "inner_header" : "header";
-    $selector_start = $inner ? ".mesmerize-inner-page" : ".mesmerize-front-page";
+    $section        = $inner ? 'inner_page_navigation' : 'front_page_navigation';
+    $prefix         = $inner ? 'inner_header' : 'header';
+    $selector_start = $inner ? '.mesmerize-inner-page' : '.mesmerize-front-page';
 
     mesmerize_add_kirki_field(array(
         'type'     => 'sectionseparator',
@@ -30,8 +30,8 @@ function mesmerize_navigation_general_options($inner = false)
         'section'   => $section,
         'priority'  => $priority,
         'settings'  => "{$prefix}_nav_sticked",
-        'default'   => true,
-        'transport' => 'refresh',
+        'default'   => mesmerize_mod_default("{$prefix}_nav_sticked"),
+        'transport' => 'postMessage',
     ));
 
     mesmerize_add_kirki_field(array(
@@ -41,7 +41,7 @@ function mesmerize_navigation_general_options($inner = false)
         'priority'  => $priority,
         'settings'  => "{$prefix}_nav_boxed",
         'default'   => false,
-        'transport' => 'refresh',
+        'transport' => 'postMessage',
     ));
 
 
@@ -52,7 +52,7 @@ function mesmerize_navigation_general_options($inner = false)
         'priority'  => $priority,
         'settings'  => "{$prefix}_nav_border",
         'default'   => mesmerize_mod_default("{$prefix}_nav_border"),
-        'transport' => 'refresh',
+        'transport' => 'postMessage',
     ));
 
 
@@ -85,17 +85,10 @@ function mesmerize_navigation_general_options($inner = false)
         ),
         'default'         => mesmerize_mod_default("{$prefix}_nav_border_color"),
         'transport'       => 'postMessage',
-        "output"          => array(
+        'output'          => array(
             array(
                 'element'  => "{$selector_start} .navigation-bar.bordered",
                 'property' => 'border-bottom-color',
-            ),
-        ),
-        'js_vars'         => array(
-            array(
-                'element'  => "{$selector_start} .navigation-bar.bordered",
-                'property' => 'border-bottom-color',
-                'function' => 'css',
             ),
         ),
         'group'           => $group,
@@ -121,7 +114,7 @@ function mesmerize_navigation_general_options($inner = false)
         'default'         => mesmerize_mod_default("{$prefix}_nav_border_thickness"),
         'priority'        => $priority,
         'transport'       => 'postMessage',
-        "output"          => array(
+        'output'          => array(
             array(
                 'element'  => "{$selector_start} .navigation-bar.bordered",
                 'property' => 'border-bottom-width',
@@ -130,20 +123,6 @@ function mesmerize_navigation_general_options($inner = false)
             array(
                 'element'       => "{$selector_start} .navigation-bar.bordered",
                 'property'      => 'border-bottom-style',
-                'value_pattern' => 'solid',
-            ),
-        ),
-        'js_vars'         => array(
-            array(
-                'element'  => "{$selector_start} .navigation-bar.bordered",
-                'property' => 'border-bottom-width',
-                'suffix'   => 'px',
-                'function' => 'css',
-            ),
-            array(
-                'element'       => "{$selector_start} .navigation-bar.bordered",
-                'property'      => 'border-bottom-style',
-                'function'      => 'css',
                 'value_pattern' => 'solid',
             ),
         ),
@@ -193,7 +172,6 @@ function mesmerize_navigation_general_options($inner = false)
         'transport' => 'postMessage',
     ));
 
-
     mesmerize_add_kirki_field(array(
         'type'     => 'select',
         'settings' => "{$prefix}_nav_bar_type",
@@ -201,21 +179,21 @@ function mesmerize_navigation_general_options($inner = false)
         'section'  => $section,
         'default'  => 'default',
         'choices'  => apply_filters('mesmerize_navigation_types', array(
-            'default'         => esc_html__('Logo on left, navigation on right', 'mesmerize'),
+            'default'         => esc_html__('Logo on left, Navigation on right', 'mesmerize'),
             'logo-above-menu' => esc_html__('Logo above menu', 'mesmerize'),
 
         )),
         'update'   => apply_filters('mesmerize_nav_bar_menu_settings_partial_update', array(
             array(
-                "value"  => "default",
-                "fields" => array(
+                'value'  => 'default',
+                'fields' => array(
                     "{$prefix}_nav_menu_items_align"   => 'flex-end',
                     "{$prefix}_fixed_menu_items_align" => 'flex-end',
                 ),
             ),
             array(
-                "value"  => "logo-above-menu",
-                "fields" => array(
+                'value'  => 'logo-above-menu',
+                'fields' => array(
                     "{$prefix}_nav_menu_items_align"   => 'center',
                     "{$prefix}_fixed_menu_items_align" => 'flex-end',
                 ),
@@ -239,18 +217,18 @@ function mesmerize_navigation_general_options($inner = false)
         'priority' => $priority,
         'update'   => apply_filters('mesmerize_navigation_menu_settings_partial_update', array(
             array(
-                "value"  => "active-line-bottom",
-                "fields" => array(
-                    "{$prefix}_nav_menu_active_color"       => mesmerize_get_var("dd_color"),
-                    "{$prefix}_nav_fixed_menu_active_color" => mesmerize_get_var("dd_fixed_color"),
+                'value'  => 'active-line-bottom',
+                'fields' => array(
+                    "{$prefix}_nav_menu_active_color"       => mesmerize_get_var('dd_color'),
+                    "{$prefix}_nav_fixed_menu_active_color" => mesmerize_get_var('dd_fixed_color'),
                 ),
             ),
 
             array(
-                "value"  => "simple-menu-items",
-                "fields" => array(
-                    "{$prefix}_nav_menu_active_color"       => mesmerize_get_var("color-1"),
-                    "{$prefix}_nav_fixed_menu_active_color" => mesmerize_get_var("color-1"),
+                'value'  => 'simple-menu-items',
+                'fields' => array(
+                    "{$prefix}_nav_menu_active_color"       => mesmerize_get_var('color-1'),
+                    "{$prefix}_nav_fixed_menu_active_color" => mesmerize_get_var('color-1'),
                 ),
             ),
 
@@ -282,7 +260,7 @@ function mesmerize_get_offcanvas_primary_menu()
             'menu_id'        => 'offcanvas_menu',
             'menu_class'     => 'offcanvas_menu',
             'container_id'   => 'offcanvas-menu',
-            'fallback_cb'    => 'mesmerize_no_hamburdegr_menu_cb',
+            'fallback_cb'    => 'mesmerize_no_hamburger_menu_cb',
         ));
         ?>
 
@@ -317,16 +295,16 @@ function mesmerize_navigation_sticky_attrs()
 {
     $inner = mesmerize_is_inner(true);
     $atts  = array(
-        "data-sticky"        => 0,
-        "data-sticky-mobile" => 1,
-        "data-sticky-to"     => "top",
+        'data-sticky'        => 0,
+        'data-sticky-mobile' => 1,
+        'data-sticky-to'     => 'top',
     );
 
     $atts   = apply_filters("mesmerize_navigation_sticky_attrs", $atts);
     $prefix = $inner ? "inner_header" : "header";
 
     $result = "";
-    if (get_theme_mod("{$prefix}_nav_sticked", true)) {
+    if (get_theme_mod("{$prefix}_nav_sticked", mesmerize_mod_default("{$prefix}_nav_sticked"))) {
         foreach ($atts as $key => $value) {
             $result .= " " . esc_attr($key) . "='" . esc_attr($value) . "' ";
         }

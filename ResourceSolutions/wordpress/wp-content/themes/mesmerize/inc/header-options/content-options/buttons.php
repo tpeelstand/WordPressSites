@@ -180,7 +180,15 @@ function mesmerize_print_buttons_list($setting, $default = array())
 {
     $buttons = get_theme_mod($setting, $default);
     
-    foreach ($buttons as $index => $button) {
+    if (is_string($buttons)) {
+        try {
+            $buttons = json_decode($buttons, true);
+        } catch (Exception $e) {
+        
+        }
+    }
+    
+    foreach ((array)$buttons as $index => $button) {
         $button = apply_filters('mesmerize_print_buttons_list_button', $button, $setting, $index);
         
         $title  = $button['label'];

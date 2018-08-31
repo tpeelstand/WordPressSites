@@ -14,7 +14,7 @@ return array (
     'category' => 'about',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'module.exports={sectionArea:{areaTitle:window.CP_Customizer.translateCompanionString("Content Column Options"),init:function($container){var contentbgcolor=CP_Customizer.createControl.color(this.getPrefixed(\'contentbgcolor\'),$container,{value:\'#ffffff\',label:window.CP_Customizer.translateCompanionString(\'Content Column Color\')});this.addToControlsList(contentbgcolor)},update:function(data){var dataId=\'[data-id=\'+data.section.attr(\'data-id\')+\'] \',selector=\'.content-col\',item=data.section.find(selector).eq(0),styleSelector=dataId+selector,currentColor=CP_Customizer.contentStyle.getNodeProp(item,styleSelector,null,\'background-color\');this.getControl(\'contentbgcolor\').attachWithSetter(currentColor,function(value){CP_Customizer.contentStyle.setProp(styleSelector,null,\'background-color\',value)})}}}',
+    'export' => 'module.exports={canRevertColumnsOnMobile:true,sectionArea:{areaTitle:window.CP_Customizer.translateCompanionString("Content Column Options"),init:function($container){var contentbgcolor=CP_Customizer.createControl.color(this.getPrefixed(\'contentbgcolor\'),$container,{value:\'#ffffff\',label:window.CP_Customizer.translateCompanionString(\'Content Column Color\')});this.addToControlsList(contentbgcolor)},update:function(data){var dataId=\'[data-id=\'+data.section.attr(\'data-id\')+\'] \',selector=\'.content-col\',item=data.section.find(selector).eq(0),styleSelector=dataId+selector,currentColor=CP_Customizer.contentStyle.getNodeProp(item,styleSelector,null,\'background-color\');this.getControl(\'contentbgcolor\').attachWithSetter(currentColor,function(value){CP_Customizer.contentStyle.setProp(styleSelector,null,\'background-color\',value)})}}}',
   ),
   1 => 
   array (
@@ -104,7 +104,7 @@ return array (
     'category' => 'about',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'module.exports={sectionArea:{areaTitle:window.CP_Customizer.translateCompanionString("Section Options"),init:function($container){var contentbgcolor=CP_Customizer.createControl.color(this.getPrefixed(\'contentbgcolor\'),$container,{value:\'#ffffff\',label:window.CP_Customizer.translateCompanionString(\'Content Column Color\')});this.addToControlsList(contentbgcolor)},update:function(data){var dataId=\'[data-id=\'+data.section.attr(\'data-id\')+\'] \',selector=\'.content-col\',item=data.section.find(selector).eq(0),styleSelector=dataId+selector,currentColor=CP_Customizer.contentStyle.getNodeProp(item,styleSelector,null,\'background-color\');this.getControl(\'contentbgcolor\').attachWithSetter(currentColor,function(value){CP_Customizer.contentStyle.setProp(styleSelector,null,\'background-color\',value)})}}}',
+    'export' => 'module.exports={canRevertColumnsOnMobile:true,sectionArea:{areaTitle:window.CP_Customizer.translateCompanionString("Section Options"),init:function($container){var contentbgcolor=CP_Customizer.createControl.color(this.getPrefixed(\'contentbgcolor\'),$container,{value:\'#ffffff\',label:window.CP_Customizer.translateCompanionString(\'Content Column Color\')});this.addToControlsList(contentbgcolor)},update:function(data){var dataId=\'[data-id=\'+data.section.attr(\'data-id\')+\'] \',selector=\'.content-col\',item=data.section.find(selector).eq(0),styleSelector=dataId+selector,currentColor=CP_Customizer.contentStyle.getNodeProp(item,styleSelector,null,\'background-color\');this.getControl(\'contentbgcolor\').attachWithSetter(currentColor,function(value){CP_Customizer.contentStyle.setProp(styleSelector,null,\'background-color\',value)})}}}',
   ),
   7 => 
   array (
@@ -179,7 +179,7 @@ return array (
     'category' => 'clients',
     'prepend' => false,
     'pro-only' => true,
-    'export' => NULL,
+    'export' => 'module.exports={canAlignRowItemsContent:false}',
   ),
   12 => 
   array (
@@ -194,7 +194,7 @@ return array (
     'category' => 'clients',
     'prepend' => false,
     'pro-only' => true,
-    'export' => NULL,
+    'export' => 'module.exports={canAlignRowItemsContent:false}',
   ),
   13 => 
   array (
@@ -239,7 +239,7 @@ return array (
     'category' => 'contact',
     'prepend' => false,
     'pro-only' => true,
-    'export' => NULL,
+    'export' => 'module.exports={canAlignRowItemsContent:false}',
   ),
   16 => 
   array (
@@ -254,7 +254,7 @@ return array (
     'category' => 'contact',
     'prepend' => false,
     'pro-only' => true,
-    'export' => NULL,
+    'export' => 'module.exports={canAlignRowItemsContent:false}',
   ),
   17 => 
   array (
@@ -299,7 +299,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => NULL,
+    'export' => 'module.exports={canRevertColumnsOnMobile:true}',
   ),
   20 => 
   array (
@@ -359,7 +359,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'modules.export={contentAligns:[\'[data-type="column"]\'],sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(-10%, -10%)",width:"100%",height:"100%"}}}}',
+    'export' => 'modules.export={contentAligns:[\'[data-type="column"]:not(.section-title-col)\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(-10%, -10%)",width:"100%",height:"100%"}}}}',
   ),
   24 => 
   array (
@@ -374,7 +374,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'modules.export={contentAligns:[\'[data-type="column"]\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(10%, -10%)",width:"100%",height:"100%"}}}}',
+    'export' => 'modules.export={contentAligns:[\'[data-type="column"]:not(.section-title-col)\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(10%, -10%)",width:"100%",height:"100%"}}}}',
   ),
   25 => 
   array (
@@ -389,7 +389,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'modules.export={contentAligns:[\'[data-type="column"]\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(5%, -5%)",width:"100%",height:"100%"}}}}',
+    'export' => 'modules.export={contentAligns:[\'[data-type="column"]:not(.section-title-col)\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(5%, -5%)",width:"100%",height:"100%"}}}}',
   ),
   26 => 
   array (
@@ -404,7 +404,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'modules.export={contentAligns:[\'[data-type="column"]\'],sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(-5%, -5%)",width:"100%",height:"100%"}}}}',
+    'export' => 'modules.export={contentAligns:[\'[data-type="column"]:not(.section-title-col)\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(-5%, -5%)",width:"100%",height:"100%"}}}}',
   ),
   27 => 
   array (
@@ -434,7 +434,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => NULL,
+    'export' => 'module.exports={canRevertColumnsOnMobile:true}',
   ),
   29 => 
   array (
@@ -449,7 +449,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'modules.export={contentAligns:[\'[data-type="column"]\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(-5%, 5%)",width:"100%",height:"100%"}}}}',
+    'export' => 'modules.export={contentAligns:[\'.row.content-holder\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(-5%, 5%)",width:"100%",height:"100%"}}}}',
   ),
   30 => 
   array (
@@ -464,7 +464,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'modules.export={contentAligns:[\'[data-type="column"]\'],sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(5%, 5%)",width:"100%",height:"100%"}}}}',
+    'export' => 'modules.export={contentAligns:[\'.row.content-holder\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(5%, 5%)",width:"100%",height:"100%"}}}}',
   ),
   31 => 
   array (
@@ -479,7 +479,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'modules.export={contentAligns:[\'[data-type="column"]\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(10%, 10%)",width:"100%",height:"100%"}}}}',
+    'export' => 'modules.export={contentAligns:[\'[data-type="column"]:not(.section-title-col)\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(10%, 10%)",width:"100%",height:"100%"}}}}',
   ),
   32 => 
   array (
@@ -494,7 +494,7 @@ return array (
     'category' => 'content',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'modules.export={contentAligns:[\'[data-type="column"]\'],sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(-10%, 10%)",width:"100%",height:"100%"}}}}',
+    'export' => 'modules.export={contentAligns:[\'[data-type="column"]:not(.section-title-col)\'],canRevertColumnsOnMobile:true,sectionStyle:{"nomedia":{".overlay-box .overlay-box-offset":{transform:"translate(-10%, 10%)",width:"100%",height:"100%"}}}}',
   ),
   33 => 
   array (
@@ -689,7 +689,7 @@ return array (
     'category' => 'overlappable',
     'prepend' => true,
     'pro-only' => true,
-    'export' => 'module.exports={customColor:[{colorClass:{selector:\'div[class*="bg-"]\',prefix:\'bg-\',suffix:\'\'}}]}',
+    'export' => 'module.exports={allowSectionTitleOptions:false,customColor:[{colorClass:{selector:\'div[class*="bg-"]\',prefix:\'bg-\',suffix:\'\'}}]}',
   ),
   46 => 
   array (
@@ -704,7 +704,7 @@ return array (
     'category' => 'overlappable',
     'prepend' => true,
     'pro-only' => true,
-    'export' => NULL,
+    'export' => 'module.exports={allowSectionTitleOptions:false}',
   ),
   47 => 
   array (
@@ -719,7 +719,7 @@ return array (
     'category' => 'overlappable',
     'prepend' => true,
     'pro-only' => true,
-    'export' => NULL,
+    'export' => 'module.exports={allowSectionTitleOptions:false}',
   ),
   48 => 
   array (
@@ -734,7 +734,7 @@ return array (
     'category' => 'overlappable',
     'prepend' => true,
     'pro-only' => true,
-    'export' => 'module.exports={customColor:[{colorClass:{selector:\'.col-padding[class*="bg-"]\',prefix:\'bg-\',suffix:\'\'}}]}',
+    'export' => 'module.exports={allowSectionTitleOptions:false,customColor:[{colorClass:{selector:\'.col-padding[class*="bg-"]\',prefix:\'bg-\',suffix:\'\'}}]}',
   ),
   49 => 
   array (
@@ -749,7 +749,7 @@ return array (
     'category' => 'overlappable',
     'prepend' => true,
     'pro-only' => true,
-    'export' => 'module.exports={customColorDefault:\'#FA6900\',customColor:[{colorClass:{selector:\'.col-padding-small[class*="bg-"]\',prefix:\'bg-\',suffix:\'\'}}]}',
+    'export' => 'module.exports={allowSectionTitleOptions:false,customColorDefault:\'#FF9800\',customColor:[{colorClass:{selector:\'.col-padding-small[class*="bg-"]\',prefix:\'bg-\',suffix:\'\'}}]}',
   ),
   50 => 
   array (
@@ -974,7 +974,7 @@ return array (
     'category' => 'team',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'module.exports={canAlignRowItemsContent:false,customColorDefault:\'#000000\',customColor:[{colorClass:{selector:\'[data-hover-fx] .overlay\',prefix:\'grad-180-transparent-\',suffix:\'\'}}]}',
+    'export' => 'module.exports={customColorDefault:\'#000000\',customColor:[{colorClass:{selector:\'[data-hover-fx] .overlay\',prefix:\'grad-180-transparent-\',suffix:\'\'}}]}',
   ),
   65 => 
   array (
@@ -1094,6 +1094,6 @@ return array (
     'category' => 'woocommerce',
     'prepend' => false,
     'pro-only' => true,
-    'export' => 'module.exports={sectionArea:{areaTitle:window.CP_Customizer.translateCompanionString("WooCommerce Section Options"),init:function($container){var color=CP_Customizer.createControl.color(this.getPrefixed(\'color\'),$container,{value:\'#ffffff\',label:window.CP_Customizer.translateCompanionString(\'Overlay color\')});this.addToControlsList(color)},update:function(data){var dataId=\'[data-id=\'+data.section.attr(\'data-id\')+\']\',selector=\' li .contentswap-effect .overlay\',item=data.section.find(selector).eq(0),styleSelector=dataId+selector,currentGradient=CP_Customizer.contentStyle.getNodeProp(item,styleSelector,null,\'background\'),currentColor=CP_Customizer.styleUtils.getCSSGradientColors(currentGradient,true).pop().value.toHexString();this.getControl(\'color\').attachWithSetter(currentColor,function(value){value=CP_Customizer.styleUtils.generateOneSideLinerGradient(180,value);CP_Customizer.contentStyle.setProp(styleSelector,null,\'background\',value)})}}}',
+    'export' => 'module.exports={sectionArea:{areaTitle:window.CP_Customizer.translateCompanionString("WooCommerce Section Options"),init:function($container){var color=CP_Customizer.createControl.color(this.getPrefixed(\'color\'),$container,{value:\'#ffffff\',label:window.CP_Customizer.translateCompanionString(\'Overlay color\')});this.addToControlsList(color)},update:function(data){var dataId=\'[data-id=\'+data.section.attr(\'data-id\')+\']\',selector=\' li .contentswap-effect .overlay\',item=data.section.find(selector).eq(0),styleSelector=dataId+selector,currentGradient=CP_Customizer.contentStyle.getNodeProp(item,styleSelector,null,\'background\'),currentColor=CP_Customizer.styleUtils.getCSSGradientColors(currentGradient,true).pop().value.toHexString();this.getControl(\'color\').attachWithSetter(currentColor,function(value){var opacity=CP_Customizer.styleUtils.getRGBAStringTransparency(value);value=CP_Customizer.styleUtils.generateOneSideLinerGradient(180,value);CP_Customizer.contentStyle.setProp(styleSelector,null,\'background\',value);CP_Customizer.contentStyle.setProp(styleSelector,null,\'opacity\',opacity)})}}}',
   ),
 );

@@ -5,7 +5,7 @@ add_filter("mesmerize_overlay_types", function ($types) {
     return $types;
 });
 
-add_action("mesmerize_header_background_overlay_settings", function($section, $prefix, $group, $inner, $priority) {  
+add_action("mesmerize_header_background_overlay_settings", function($section, $prefix, $group, $inner, $priority) {
     mesmerize_add_kirki_field(array(
         'type'            => 'gradient-control',
         'label'           => esc_html__('Gradient', 'mesmerize'),
@@ -77,7 +77,9 @@ add_action('wp_head', function () {
     if ($colors == "") {
         $colors = mesmerize_mod_default($prefix . '_overlay_gradient_colors');
     } else {
-        $colors = json_decode($colors, true);
+        if(is_string($colors)) {
+            $colors = json_decode($colors, true);
+        }
     }
 
     $gradient = mesmerize_get_gradient_value($colors['colors'], $colors['angle']);

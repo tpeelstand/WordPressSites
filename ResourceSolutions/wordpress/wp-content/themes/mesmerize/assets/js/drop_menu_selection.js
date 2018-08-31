@@ -150,7 +150,7 @@
 
         var $currentSelectedItem = $("");
         // on tablet
-        $menu.on('tap.navigation', 'li.menu-item > a', function (event) {
+        $menu.on('tap.navigation', 'li.menu-item > a, li.page_item > a', function (event) {
             var $link = $(this);
             var $item = $link.parent();
             var $submenu = $item.children('ul');
@@ -167,7 +167,7 @@
                         if (!anchor || !$('#' + anchor).length) {
                             return;
                         }
-                    }
+                    }content: "\f0da"
                     deselectItems($menu);
                 } else {
                     selectItem($menu, $item);
@@ -176,6 +176,7 @@
                 }
 
             } else {
+                event.stopPropagation();
                 deselectItems($menu);
             }
 

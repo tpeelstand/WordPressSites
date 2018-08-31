@@ -41,7 +41,7 @@ add_action("mesmerize_customize_register_options", function () {
 
 add_filter("mesmerize_header_background_atts", function ($attrs, $bg_type, $inner) {
     if ( ! $inner) {
-        $full_height_header = get_theme_mod('full_height_header', false);
+        $full_height_header = get_theme_mod('full_height_header', mesmerize_mod_default('full_height_header'));
 
         if ($full_height_header) {
             $attrs['style'] .= "; min-height:100vh";
@@ -61,7 +61,7 @@ function mesmerize_header_background_atts()
     );
 
     $prefix = $inner ? "inner_header" : "header";
-    $bgType = get_theme_mod($prefix . '_background_type', $inner ? 'color' : 'image');
+    $bgType = get_theme_mod($prefix . '_background_type', mesmerize_mod_default($prefix . '_background_type'));
     $bgType = apply_filters('mesmerize_' . $prefix . '_background_type', $bgType);
 
     do_action("mesmerize_background", $bgType, $inner, $prefix);

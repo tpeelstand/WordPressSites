@@ -6,21 +6,21 @@ function mesmerize_get_footer_contact_boxes($index = 0)
 
     $contact_boxes = array(
         array(
-            'icon_mod'     => "footer_box1_content_icon",
-            'icon_default' => "fa-map-marker",
-            'text_mod'     => "footer_box1_content_text",
+            'icon_mod'     => 'footer_box1_content_icon',
+            'icon_default' => 'fa-map-marker',
+            'text_mod'     => 'footer_box1_content_text',
             'text_default' => esc_html__('San Francisco - Adress - 18 California Street 1100.', 'mesmerize'),
         ),
         array(
-            'icon_mod'     => "footer_box2_content_icon",
-            'icon_default' => "fa-envelope-o",
-            'text_mod'     => "footer_box2_content_text",
+            'icon_mod'     => 'footer_box2_content_icon',
+            'icon_default' => 'fa-envelope-o',
+            'text_mod'     => 'footer_box2_content_text',
             'text_default' => esc_html__('hello@mycoolsite.com', 'mesmerize'),
         ),
         array(
-            'icon_mod'     => "footer_box3_content_icon",
-            'icon_default' => "fa-phone",
-            'text_mod'     => "footer_box3_content_text",
+            'icon_mod'     => 'footer_box3_content_icon',
+            'icon_default' => 'fa-phone',
+            'text_mod'     => 'footer_box3_content_text',
             'text_default' => esc_html__('+1 (555) 345 234343', 'mesmerize'),
         ),
     );
@@ -54,7 +54,7 @@ function mesmerize_footer_settings()
         'type'     => 'sectionseparator',
         'label'    => esc_html__('Footer Content', 'mesmerize'),
         'section'  => $section,
-        'settings' => "footer_content_separator",
+        'settings' => 'footer_content_separator',
         'priority' => 1,
     ));
 
@@ -65,6 +65,7 @@ function mesmerize_footer_settings()
         'section'  => $section,
         'default'  => false,
         'priority' => 4,
+        'transport' => 'postMessage',
     ));
 
 
@@ -73,7 +74,7 @@ function mesmerize_footer_settings()
         'label'     => esc_html__('More colors and typography options available in PRO. @BTN@', 'mesmerize'),
         'section'   => $section,
         'priority'  => 4,
-        'settings'  => "footer_content_typography_pro_info",
+        'settings'  => 'footer_content_typography_pro_info',
         'default'   => true,
         'transport' => 'postMessage',
     ));
@@ -85,10 +86,10 @@ function mesmerize_footer_settings()
         'section'  => $section,
         'priority' => 1,
         'default'  => 'simple',
-        'choices'  => apply_filters("mesmerize_footer_templates", array(
-            "simple"        => esc_html__("Simple", 'mesmerize'),
-            "contact-boxes" => esc_html__("Contact Boxes", 'mesmerize'),
-            "content-lists" => esc_html__("Widgets Boxes", 'mesmerize'),
+        'choices'  => apply_filters('mesmerize_footer_templates', array(
+            'simple'        => esc_html__('Simple', 'mesmerize'),
+            'contact-boxes' => esc_html__('Contact Boxes', 'mesmerize'),
+            'content-lists' => esc_html__('Widgets Boxes', 'mesmerize'),
         )),
 
         'update' => apply_filters('mesmerize_footer_templates_update', array()),
@@ -103,14 +104,14 @@ function mesmerize_footer_settings()
         'type'            => 'sectionseparator',
         'label'           => esc_html__('Box 1 Content', 'mesmerize'),
         'section'         => $section,
-        'settings'        => "footer_box1_content_separator",
+        'settings'        => 'footer_box1_content_separator',
         'priority'        => 1,
         'group'           => $group,
         'active_callback' => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
     ));
@@ -122,12 +123,13 @@ function mesmerize_footer_settings()
         'section'         => $section,
         'priority'        => 1,
         'group'           => $group,
-        'default'         => "fa-map-marker",
+        'default'         => 'fa-map-marker',
+        'transport' => 'postMessage',
         'active_callback' => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
     ));
@@ -139,13 +141,13 @@ function mesmerize_footer_settings()
         'section'           => $section,
         'priority'          => 1,
         'group'             => $group,
-        'default'           => "San Francisco - Adress - 18 California Street 1100.",
+        'default'           => 'San Francisco - Adress - 18 California Street 1100.',
         'sanitize_callback' => 'wp_kses_post',
         'active_callback'   => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
         'transport'         => 'postMessage',
@@ -161,14 +163,14 @@ function mesmerize_footer_settings()
         'type'            => 'sectionseparator',
         'label'           => esc_html__('Box 2 Content', 'mesmerize'),
         'section'         => $section,
-        'settings'        => "footer_box2_content_separator",
+        'settings'        => 'footer_box2_content_separator',
         'priority'        => 1,
         'group'           => $group,
         'active_callback' => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
     ));
@@ -180,12 +182,13 @@ function mesmerize_footer_settings()
         'section'         => $section,
         'priority'        => 1,
         'group'           => $group,
-        'default'         => "fa-envelope-o",
+        'default'         => 'fa-envelope-o',
+        'transport' 	  => 'postMessage',
         'active_callback' => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
     ));
@@ -197,13 +200,13 @@ function mesmerize_footer_settings()
         'section'           => $section,
         'priority'          => 1,
         'group'             => $group,
-        'default'           => "hello@mycoolsite.com",
+        'default'           => 'hello@mycoolsite.com',
         'sanitize_callback' => 'wp_kses_post',
         'active_callback'   => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
         'transport'         => 'postMessage',
@@ -220,14 +223,14 @@ function mesmerize_footer_settings()
         'type'            => 'sectionseparator',
         'label'           => esc_html__('Box 3 Content', 'mesmerize'),
         'section'         => $section,
-        'settings'        => "footer_box3_content_separator",
+        'settings'        => 'footer_box3_content_separator',
         'priority'        => 1,
         'group'           => $group,
         'active_callback' => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
     ));
@@ -239,12 +242,13 @@ function mesmerize_footer_settings()
         'section'         => $section,
         'priority'        => 1,
         'group'           => $group,
-        'default'         => "fa-phone",
+        'default'         => 'fa-phone',
+        'transport' 	  => 'postMessage',
         'active_callback' => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
     ));
@@ -256,13 +260,13 @@ function mesmerize_footer_settings()
         'section'           => $section,
         'priority'          => 1,
         'group'             => $group,
-        'default'           => "+1 (555) 345 234343",
+        'default'           => '+1 (555) 345 234343',
         'sanitize_callback' => 'wp_kses_post',
         'active_callback'   => array(
             array(
                 'setting'  => 'footer_template',
                 'operator' => '==',
-                'value'    => "contact-boxes",
+                'value'    => 'contact-boxes',
             ),
         ),
         'transport'         => 'postMessage',
@@ -277,13 +281,13 @@ function mesmerize_footer_settings()
 
     mesmerize_add_kirki_field(array(
         'type'            => 'sidebar-button-group',
-        'settings'        => "footer_content_contact_boxes_group_button",
+        'settings'        => 'footer_content_contact_boxes_group_button',
         'label'           => esc_html__('Contact Boxes Options', 'mesmerize'),
         'section'         => $section,
         'priority'        => 1,
         'active_callback' => array(
             array(
-                'setting'  => "footer_template",
+                'setting'  => 'footer_template',
                 'operator' => '==',
                 'value'    => 'contact-boxes',
             ),
@@ -314,7 +318,7 @@ function mesmerize_footer_settings()
             'type'            => 'sectionseparator',
             'label'           => esc_html($social_separator_label),
             'section'         => $section,
-            'settings'        => "footer_content_" . $socialid . "_separator",
+            'settings'        => 'footer_content_' . $socialid . '_separator',
             'priority'        => 1,
             'group'           => $group,
             'active_callback' => array(
@@ -334,6 +338,7 @@ function mesmerize_footer_settings()
             'priority'        => 1,
             'group'           => $group,
             'default'         => true,
+            'transport'       => 'postMessage',
             'active_callback' => array(
                 array(
                     'setting'  => 'footer_template',
@@ -350,7 +355,7 @@ function mesmerize_footer_settings()
             'section'         => $section,
             'priority'        => 1,
             'group'           => $group,
-            'default'         => "#",
+            'default'         => '#',
             'transport'       => 'postMessage',
             'active_callback' => array(
                 array(
@@ -374,6 +379,7 @@ function mesmerize_footer_settings()
             'priority'        => 1,
             'group'           => $group,
             'default'         => $social['icon'],
+            'transport'       => 'postMessage',
             'active_callback' => array(
                 array(
                     'setting'  => 'footer_content_' . $socialid . '_enabled',
@@ -392,13 +398,13 @@ function mesmerize_footer_settings()
 
     mesmerize_add_kirki_field(array(
         'type'            => 'sidebar-button-group',
-        'settings'        => "footer_content_social_icons_group_button",
+        'settings'        => 'footer_content_social_icons_group_button',
         'label'           => esc_html__('Social Icons Options', 'mesmerize'),
         'section'         => $section,
         'priority'        => 1,
         'active_callback' => array(
             array(
-                'setting'  => "footer_template",
+                'setting'  => 'footer_template',
                 'operator' => 'in',
                 'value'    => $footers_with_social_icons,
             ),

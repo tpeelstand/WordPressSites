@@ -32,7 +32,6 @@ function mesmerize_add_sections($wp_customize)
 {
     /** @var WP_Customize_Manager $wp_customize */
     
-    
     $wp_customize->add_section('extendthemes_start_from_demo_site', array(
         'priority'       => 1,
         'capability'     => 'edit_theme_options',
@@ -145,6 +144,8 @@ function mesmerize_customize_register_controls($wp_customize)
     $wp_customize->register_control_type('\\Mesmerize\FontAwesomeIconControl');
     $wp_customize->register_control_type('Mesmerize\\GradientControl');
     
+    $wp_customize->get_setting('background_color')->transport = "refresh";
+    
     // Register our custom control with Kirki
     add_filter('kirki/control_types', function ($controls) {
         $controls['sectionseparator']          = '\\Mesmerize\\Kirki_Controls_Separator_Control';
@@ -203,7 +204,6 @@ add_action('customize_register', function () {
         'label'    => $updateText,
         'section'  => "header_layout",
         'settings' => "header_layout_newer_plugin",
-    
     ));
 });
 
@@ -430,13 +430,10 @@ add_action('wp_ajax_mesmerize_list_fa', function () {
 
 //TODO: needs refactoring
 add_filter('body_class', function ($classes) {
+    
     $body_class = mesmerize_is_front_page(true) ? "mesmerize-front-page" : "mesmerize-inner-page";
     $body_class = array($body_class);
-
-
-//    if (strpos(get_page_template(), 'page-templates/homepage.php') !== false && ! mesmerize_is_front_page()) {
-//        $body_class = array("mesmerize-front-page", "only-template");
-//    }
+    
     
     $classes = array_merge($classes, $body_class);
     
@@ -506,3 +503,13 @@ add_filter('the_content', function ($content) {
     
     return $content;
 }, PHP_INT_MAX);
+
+add_action('customize_preview_init', function () {
+    if (mesmerize_is_customize_preview() && ! apply_filters('mesmerize_is_companion_installed', false)) {
+        $no_companion_preview_style = '
+          [data-reiki-hidden="true"] {
+            display: none !important;
+          }';
+        wp_add_inline_style('customize-preview', $no_companion_preview_style);
+    }
+});

@@ -28,21 +28,7 @@ i.fa.icon.reverse.color7 {
 	border: none;
 	
 }
-.ui-accordion-header {
-   
-}
-.ui-accordion-header:hover {
-	cursor: pointer;
-}
 
-/* Accordidon Updates */
-.ui-accordion-content p {
-	-webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-	
-}
 /* Responsive */
 @media screen and (max-width: 767px) {
 	.logo_col {
@@ -57,7 +43,13 @@ i.fa.icon.reverse.color7 {
 	.header-wrapper > div[class*=header] {
 		display: none;
 	}
-	.page-content{
+	.gridContainer {
+		margin-top: 75px;
+	}
+	.responsive-tabs .responsive-tabs__heading:after {
+		display: none !important;
+	}
+	body.home .page-content{
 		padding-top: 0;
 		padding-bottom: 0;
 		background-image: url(http://localhost/wordpress/ResourceSolutions/wordpress/wp-content/uploads/2018/07/daylight-environment-flora-dark.jpg);
@@ -65,6 +57,9 @@ i.fa.icon.reverse.color7 {
 		background-size: cover;		
 		background-color: rgba(0,0,0, 1);
 }
+	body.page-template .page-content {
+		background: #333;
+	}
 	.icon-box_full, h1.hero-title, p.header-subtitle2, p.header-subtitle {
 		display: none;
 	}

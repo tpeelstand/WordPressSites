@@ -4,16 +4,16 @@ namespace Mesmerize\Customizer\Panels;
 
 class ContentPanel extends \Mesmerize\Customizer\BasePanel
 {
-
+    
     private $popupTemplatesLoaded = false;
-
+    
     public function init()
     {
         $this->companion()->customizer()->registerScripts(array($this, 'addScripts'));
         $this->companion()->customizer()->previewInit(array($this, '_addPreviewScripts'));
         add_action('cloudpress\customizer\global_scripts', array($this, '__popupsTemplates'));
         add_action('cloudpress\customizer\preview_scripts', array($this, 'loadWPEditor'));
-
+        
         $this->addSections(
             array(
                 "page_layout_reorder"   => array(
@@ -58,14 +58,14 @@ class ContentPanel extends \Mesmerize\Customizer\BasePanel
             )
         );
     }
-
-
+    
+    
     public function addScripts()
     {
         $jsUrl = $this->companion()->assetsRootURL() . "/js/customizer/";
-
+        
         if (apply_filters('\cloudpress\customizer\load_bundled_version', true)) {
-
+        
         } else {
             wp_enqueue_script('cp-customizer-content', $jsUrl . "customizer-content.js", array('customizer-base'), false, true);
             wp_enqueue_script('cp-customizer-content-tpls', $jsUrl . "customizer-content-tpls.js", array('customizer-base'), false, true);
@@ -73,27 +73,28 @@ class ContentPanel extends \Mesmerize\Customizer\BasePanel
             wp_enqueue_script('customizer-content-sections-overlays', $jsUrl . "customizer-content-sections-overlays.js", array('customizer-base'), false, true);
             wp_enqueue_script('cp-customizer-menu', $jsUrl . "customizer-menu.js", array('customizer-base'), false, true);
         }
-
+        
     }
-
+    
     public function _addPreviewScripts()
     {
         $jsUrl = $this->companion()->assetsRootURL() . "/js/customizer/";
     }
-
+    
     public function loadWPEditor()
     {
+        wp_enqueue_script('wplink');
         wp_enqueue_script('tinymce_js', includes_url('js/tinymce/') . 'wp-tinymce.php', array('jquery'), false, true);
     }
-
+    
     public function __popupsTemplates()
     {
         if ($this->popupTemplatesLoaded) {
             return;
         }
-
+        
         $this->popupTemplatesLoaded = true;
-
+        
         ?>
         <!--suppress JSAnnotator -->
         <div id="cp-container-editor" style="display:none">
@@ -340,12 +341,12 @@ class ContentPanel extends \Mesmerize\Customizer\BasePanel
                 </inline-script>
             </li>
         </script>
-
-
+        
+        
         <?php
-
+        
     }
-
+    
     public function render_template()
     {
         ?>

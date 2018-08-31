@@ -47,16 +47,20 @@ function mesmerize_add_blog_options($section)
     ));
     
     
+    $posts_per_row = array();
+    
+    foreach (array(1, 2, 3, 4) as $class) {
+        $posts_per_row[$class] = sprintf(_n('%s item', '%s items', $class, "mesmerize"), $class);
+    }
+    
+    
     mesmerize_add_kirki_field(array(
-        'type'     => 'number',
+        'type'     => 'select',
         'settings' => 'blog_posts_per_row',
         'label'    => esc_html__('Post per row', 'mesmerize'),
         'section'  => $section,
-        'default'  => 2,
-        'choices'  => array(
-            'min' => 1,
-            'max' => 12,
-        ),
+        'default'  => mesmerize_mod_default('blog_posts_per_row'),
+        'choices'  => $posts_per_row,
     ));
     
     mesmerize_add_kirki_field(array(

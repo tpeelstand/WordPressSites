@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 flexbox center-xs middle-xs content-section-spacing-medium footer-column-black">
+                <div class="col-sm-4 flexbox center-xs middle-xs content-section-spacing-medium footer-bg-accent">
                   <div>
                     <div class="footer-logo space-bottom-small">
                         <h2><?php mesmerize_print_logo(true); ?></h2>

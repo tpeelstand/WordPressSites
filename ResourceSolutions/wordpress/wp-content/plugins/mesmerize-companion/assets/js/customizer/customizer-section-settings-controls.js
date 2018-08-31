@@ -1449,6 +1449,18 @@
                 }
             },
 
+            hideAll: function () {
+                for (var control in this.__controls) {
+                    this.__controls[control].hide();
+                }
+            },
+
+            showAll: function () {
+                for (var control in this.__controls) {
+                    this.__controls[control].show();
+                }
+            },
+
             addToControlsList: function (control) {
                 this.__controls[control.id] = control;
             },
@@ -1542,6 +1554,19 @@
             },
 
             update: function (data) {
+
+                var self = this,
+                    initData = CP_Customizer.utils.deepClone(data),
+                    rebindCallback = _.throttle(function () {
+                        self.update(initData);
+                    }, 50);
+
+                CP_Customizer.rebind(CP_Customizer.events.PREVIEW_LOADED + ".settings-panel", _.debounce(function () {
+                    var oldSectionSelector = CP_Customizer.preview.getNodeAbsSelector(initData.section);
+                    initData.section = CP_Customizer.preview.jQuery(oldSectionSelector);
+                    rebindCallback();
+                }, 100));
+                CP_Customizer.rebind(CP_Customizer.events.STATE_UPDATED + ".settings-panel", rebindCallback);
 
                 data.sectionExports = CP_Customizer.getSectionExports(data.section);
 

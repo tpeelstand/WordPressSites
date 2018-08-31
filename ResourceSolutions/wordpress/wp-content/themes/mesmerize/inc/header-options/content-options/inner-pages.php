@@ -11,7 +11,6 @@ function mesmerize_inner_pages_header_content_options($section, $prefix, $priori
         'priority' => $priority,
     ));
 
-
     mesmerize_add_kirki_field(array(
         'type'     => 'radio-buttonset',
         'label'    => esc_html__('Text Align', 'mesmerize'),
@@ -47,21 +46,13 @@ function mesmerize_inner_pages_header_content_options($section, $prefix, $priori
         ),
     ));
 
-
-
-
     mesmerize_add_kirki_field(array(
 
         'type'     => 'spacing',
         'label'    => esc_html__('Content Spacing', 'mesmerize'),
         'section'  => $section,
         'settings' => 'inner_header_spacing',
-
-        'default' => array(
-            "top"    => "8%",
-            "bottom" => "8%",
-        ),
-
+        'default' => mesmerize_mod_default('inner_header_spacing'),
         "output" => array(
             array(
                 "element"  => ".inner-header-description",
@@ -69,9 +60,7 @@ function mesmerize_inner_pages_header_content_options($section, $prefix, $priori
                 'suffix'   => ' !important',
             ),
         ),
-
         'transport' => 'postMessage',
-
         'js_vars'  => array(
             array(
                 "element"  => ".inner-header-description",
@@ -93,9 +82,6 @@ function mesmerize_inner_pages_header_content_options($section, $prefix, $priori
         'priority' => $priority,
     ));
 }
-
-
-
 
 
 /*

@@ -32,15 +32,16 @@ wp.customize.controlConstructor['sidebar-button-group'] = wp.customize.Control.e
                 }
             });
 
-            /*
-            controls = _.sortBy(controls, function(c) {
-                return c.priority();
-            });
-           */
-
 
             _.each(controls, function (c) {
                 holder.append(c.container);
+                c.container.on('focus', 'input,textarea', function () {
+                    control.currentFocusedElement = this;
+                });
+
+                // c.container.on('blur', 'input,textarea', function () {
+                //     control.currentFocusedElement = false;
+                // });
             });
 
 
@@ -85,6 +86,11 @@ wp.customize.controlConstructor['sidebar-button-group'] = wp.customize.Control.e
                 } else {
                     control.deactivate();
                 }
+            }
+
+            if (control.currentFocusedElement) {
+                control.currentFocusedElement.focus();
+                control.currentFocusedElement = false;
             }
         });
     }

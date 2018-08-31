@@ -28,7 +28,7 @@ function mesmerize_header_overlay_options($section, $prefix, $group, $inner, $pr
         'label'    => esc_html__('Overlay Options', 'mesmerize'),
         'section'  => $section,
         'settings' => $prefix . '_overlay_header',
-        'group' => $group
+        'group'    => $group
     ));
 
     mesmerize_add_kirki_field(array(
@@ -40,7 +40,7 @@ function mesmerize_header_overlay_options($section, $prefix, $group, $inner, $pr
             'none'     => esc_html__('Shape Only', 'mesmerize')
         )),
         'default'         => mesmerize_mod_default($prefix . '_overlay_type'),
-        'group' => $group
+        'group'           => $group
     ));
 
 

@@ -7,7 +7,7 @@ function mesmerize_offscreen_menu_settings()
     $prefix   = "header_offscreen_nav";
     $section  = "navigation_offscreen";
     $priority = 1;
-    
+
     mesmerize_add_kirki_field(array(
         'type'     => 'sectionseparator',
         'label'    => esc_html__('Offscreen Menu Settings', 'mesmerize'),
@@ -17,25 +17,24 @@ function mesmerize_offscreen_menu_settings()
     ));
 
     mesmerize_add_kirki_field(array(
-        'type'     => 'checkbox',
-        'settings' => "{$prefix}_on_tablet",
-        'label'    => esc_html__('Show offscreen navigation on tablet', 'mesmerize'),
-        'section'  => $section,
-        'default'  => false,
-        'priority' => $priority,
-
+        'type'      => 'checkbox',
+        'settings'  => "{$prefix}_on_tablet",
+        'label'     => esc_html__('Show offscreen navigation on tablet', 'mesmerize'),
+        'section'   => $section,
+        'default'   => false,
+        'priority'  => $priority,
+        'transport' => 'postMessage',
     ));
 
     mesmerize_add_kirki_field(array(
-        'type'     => 'checkbox',
-        'settings' => "{$prefix}_on_desktop",
-        'label'    => esc_html__('Show offscreen navigation on desktop', 'mesmerize'),
-        'section'  => $section,
-        'default'  => false,
-        'priority' => $priority,
-
+        'type'      => 'checkbox',
+        'settings'  => "{$prefix}_on_desktop",
+        'label'     => esc_html__('Show offscreen navigation on desktop', 'mesmerize'),
+        'section'   => $section,
+        'default'   => false,
+        'priority'  => $priority,
+        'transport' => 'postMessage',
     ));
-
 
     mesmerize_add_kirki_field(array(
         'type'      => 'ope-info-pro',

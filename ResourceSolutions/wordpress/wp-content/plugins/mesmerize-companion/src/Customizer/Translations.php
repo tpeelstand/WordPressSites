@@ -5,7 +5,7 @@ namespace Mesmerize\Customizer;
 class Translations
 {
     private static $translationMap = null;
-    
+
     private static function getStringsArray()
     {
         return apply_filters('cloudpress\customizer\translation_strings',
@@ -47,6 +47,18 @@ class Translations
                     "translated" => __("Api key", "mesmerize-companion"),
                 ),
                 array(
+                    "original"   => "Options",
+                    "translated" => __("Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background",
+                    "translated" => __("Background", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background Options",
+                    "translated" => __("Background Options", "mesmerize-companion"),
+                ),
+                array(
                     "original"   => "Background Color",
                     "translated" => __("Background Color", "mesmerize-companion"),
                 ),
@@ -63,6 +75,78 @@ class Translations
                     "translated" => __("Background Type", "mesmerize-companion"),
                 ),
                 array(
+                    "original"   => "Color Background Options",
+                    "translated" => __("Color Background Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Gradient Background Options",
+                    "translated" => __("Gradient Background Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background Gradient",
+                    "translated" => __("Background Gradient", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Image Background Options",
+                    "translated" => __("Image Background Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background Image Size",
+                    "translated" => __("Background Image Size", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Auto",
+                    "translated" => __("Auto", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Cover",
+                    "translated" => __("Cover", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background Image Position",
+                    "translated" => __("Background Image Position", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "left top",
+                    "translated" => __("left top", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "left center",
+                    "translated" => __("left center", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "left bottom",
+                    "translated" => __("left bottom", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "center top",
+                    "translated" => __("center top", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "center center",
+                    "translated" => __("center center", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "center bottom",
+                    "translated" => __("center bottom", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "right top",
+                    "translated" => __("right top", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "right center",
+                    "translated" => __("right center", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "right bottom",
+                    "translated" => __("right bottom", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Video Background Options",
+                    "translated" => __("Video Background Options", "mesmerize-companion"),
+                ),
+                array(
                     "original"   => "Background can be changed in PRO",
                     "translated" => __("Background can be changed in PRO", "mesmerize-companion"),
                 ),
@@ -77,6 +161,18 @@ class Translations
                 array(
                     "original"   => "Bordered",
                     "translated" => __("Bordered", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background Border Radius",
+                    "translated" => __("Background Border Radius", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background Border Color",
+                    "translated" => __("Background Border Color", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background Border Thickness",
+                    "translated" => __("Background Border Thickness", "mesmerize-companion"),
                 ),
                 array(
                     "original"   => "Button Color",
@@ -105,6 +201,34 @@ class Translations
                 array(
                     "original"   => "Button",
                     "translated" => __("Button", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Buttons",
+                    "translated" => __("Buttons", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Show buttons",
+                    "translated" => __("Show buttons", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Buttons Options",
+                    "translated" => __("Buttons Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Buttons Type",
+                    "translated" => __("Buttons Type", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Normal Buttons",
+                    "translated" => __("Normal Buttons", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "App Store buttons",
+                    "translated" => __("App Store buttons", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Store Badges",
+                    "translated" => __("Store Badges", "mesmerize-companion"),
                 ),
                 array(
                     "original"   => "Cancel",
@@ -194,7 +318,42 @@ class Translations
                     "original"   => "Contact Form 7 Options",
                     "translated" => __("Contact Form 7 Options", "mesmerize-companion"),
                 ),
-                
+                array(
+                    "original"   => "Content",
+                    "translated" => __("Content", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Content Layout",
+                    "translated" => __("Content Layout", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text on center",
+                    "translated" => __("Text on center", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text on right",
+                    "translated" => __("Text on right", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text on left",
+                    "translated" => __("Text on left", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text with media on left",
+                    "translated" => __("Text with media on left", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text with media on right",
+                    "translated" => __("Text with media on right", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text with media above",
+                    "translated" => __("Text with media above", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text with media below",
+                    "translated" => __("Text with media below", "mesmerize-companion"),
+                ),
                 array(
                     "original"   => "Content Align",
                     "translated" => __("Content Align", "mesmerize-companion"),
@@ -214,6 +373,34 @@ class Translations
                 array(
                     "original"   => "Content align",
                     "translated" => __("Content align", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Media Type",
+                    "translated" => __("Media Type", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Media box settings",
+                    "translated" => __("Media box settings", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Enable media shadow",
+                    "translated" => __("Enable media shadow", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Media Width",
+                    "translated" => __("Media Width", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Media Box Settings",
+                    "translated" => __("Media Box Settings", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Media Vertical Align",
+                    "translated" => __("Media Vertical Align", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Media Box Spacing",
+                    "translated" => __("Media Box Spacing", "mesmerize-companion"),
                 ),
                 array(
                     "original"   => "Counter duration ( in milliseconds )",
@@ -290,6 +477,110 @@ class Translations
                     "translated" => __("Frame Settings", "mesmerize-companion"),
                 ),
                 array(
+                    "original"   => "Frame Options",
+                    "translated" => __("Frame Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Frame Type",
+                    "translated" => __("Frame Type", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Frame Width",
+                    "translated" => __("Frame Width", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Frame Height",
+                    "translated" => __("Frame Height", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Frame Offset left",
+                    "translated" => __("Frame Offset left", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Frame Offset top",
+                    "translated" => __("Frame Offset top", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Frame Thickness",
+                    "translated" => __("Frame Thickness", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Frame Color",
+                    "translated" => __("Frame Color", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Show frame over image",
+                    "translated" => __("Show frame over image", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Show frame shadow",
+                    "translated" => __("Show frame shadow", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Hide frame on mobile",
+                    "translated" => __("Hide frame on mobile", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Show title",
+                    "translated" => __("Show title", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Title text",
+                    "translated" => __("Title text", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Title Options",
+                    "translated" => __("Title Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Title Typography",
+                    "translated" => __("Title Typography", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Title Spacing",
+                    "translated" => __("Title Spacing", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Show subtitle",
+                    "translated" => __("Show subtitle", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Subtitle text",
+                    "translated" => __("Subtitle text", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Subtitle Options",
+                    "translated" => __("Subtitle Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Subtitle Typography",
+                    "translated" => __("Subtitle Typography", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Subtitle Spacing",
+                    "translated" => __("Subtitle Spacing", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Show Motto",
+                    "translated" => __("Show Motto", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Motto text",
+                    "translated" => __("Motto text", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Motto Options",
+                    "translated" => __("Motto Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Motto Typography",
+                    "translated" => __("Motto Typography", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Motto Spacing",
+                    "translated" => __("Motto Spacing", "mesmerize-companion"),
+                ),
+                array(
                     "original"   => "Gallery Settings",
                     "translated" => __("Gallery Settings", "mesmerize-companion"),
                 ),
@@ -332,6 +623,22 @@ class Translations
                 array(
                     "original"   => "Image",
                     "translated" => __("Image", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Image Settings",
+                    "translated" => __("Image Settings", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Make Image round",
+                    "translated" => __("Make Image round", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Image Border Color",
+                    "translated" => __("Image Border Color", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Image Border Thickness",
+                    "translated" => __("Image Border Thickness", "mesmerize-companion"),
                 ),
                 array(
                     "original"   => "Item content align",
@@ -474,8 +781,44 @@ class Translations
                     "translated" => __("Order", "mesmerize-companion"),
                 ),
                 array(
+                    "original"   => "Show overlay",
+                    "translated" => __("Show overlay", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Overlay Options",
+                    "translated" => __("Overlay Options", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Overlay Type",
+                    "translated" => __("Overlay Type", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Overlay Color",
+                    "translated" => __("Overlay Color", "mesmerize-companion"),
+                ),
+                array(
                     "original"   => "Overlay color",
                     "translated" => __("Overlay color", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Overlay Gradient",
+                    "translated" => __("Overlay Gradient", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Overlay Opacity",
+                    "translated" => __("Overlay Opacity", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Shape Only",
+                    "translated" => __("Shape Only", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Overlay Shapes",
+                    "translated" => __("Overlay Shapes", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Shape Light",
+                    "translated" => __("Shape Light", "mesmerize-companion"),
                 ),
                 array(
                     "original"   => "Please upgrade to the PRO version to use this item and many others.",
@@ -554,6 +897,18 @@ class Translations
                     "translated" => __("Section", "mesmerize-companion"),
                 ),
                 array(
+                    "original"   => "Content Spacing",
+                    "translated" => __("Content Spacing", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Mobile Content Spacing",
+                    "translated" => __("Mobile Content Spacing", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Background Spacing",
+                    "translated" => __("Background Spacing", "mesmerize-companion"),
+                ),
+                array(
                     "original"   => "Select Image",
                     "translated" => __("Select Image", "mesmerize-companion"),
                 ),
@@ -618,6 +973,58 @@ class Translations
                     "translated" => __("Text", "mesmerize-companion"),
                 ),
                 array(
+                    "original"   => "Text Animation",
+                    "translated" => __("Text Animation", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Enable text animation",
+                    "translated" => __("Enable text animation", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "The text between the curly braces will be replaced with the alternative texts in the following text area. Type one alternative text per line.",
+                    "translated" => __("The text between the curly braces will be replaced with the alternative texts in the following text area. Type one alternative text per line.", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Alternative text (one per row)",
+                    "translated" => __("Alternative text (one per row)", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text box settings",
+                    "translated" => __("Text box settings", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text Box Settings",
+                    "translated" => __("Text Box Settings", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text Align",
+                    "translated" => __("Text Align", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text Width",
+                    "translated" => __("Text Width", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text Vertical Align",
+                    "translated" => __("Text Vertical Align", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Top",
+                    "translated" => __("Top", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Middle",
+                    "translated" => __("Middle", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Bottom",
+                    "translated" => __("Bottom", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Text Box Background Options",
+                    "translated" => __("Text Box Background Options", "mesmerize-companion"),
+                ),
+                array(
                     "original"   => "The quick brown fox jumps over the lazy dog",
                     "translated" => __("The quick brown fox jumps over the lazy dog", "mesmerize-companion"),
                 ),
@@ -670,8 +1077,64 @@ class Translations
                     "translated" => __("Use this field for 3rd party maps plugins. The fields above will be ignored in this case.", "mesmerize-companion"),
                 ),
                 array(
+                    "original"   => "Video",
+                    "translated" => __("Video", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Self hosted video (MP4)",
+                    "translated" => __("Self hosted video (MP4)", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "External Video",
+                    "translated" => __("External Video", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Video Settings",
+                    "translated" => __("Video Settings", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Content Video",
+                    "translated" => __("Content Video", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Autoplay video",
+                    "translated" => __("Autoplay video", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "In customizer the video auto play is turned off for performance improvements",
+                    "translated" => __("In customizer the video auto play is turned off for performance improvements", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Loop video",
+                    "translated" => __("Loop video", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Video Icon Color",
+                    "translated" => __("Video Icon Color", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Video Icon Hover Color",
+                    "translated" => __("Video Icon Hover Color", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Hide Video Poster",
+                    "translated" => __("Hide Video Poster", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Video Poster",
+                    "translated" => __("Video Poster", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Video Poster Overlay Color",
+                    "translated" => __("Video Poster Overlay Color", "mesmerize-companion"),
+                ),
+                array(
                     "original"   => "Video Popup Button",
                     "translated" => __("Video Popup Button", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Slide",
+                    "translated" => __("Slide", "mesmerize-companion"),
                 ),
                 array(
                     "original"   => "Visible",
@@ -716,6 +1179,14 @@ class Translations
                 array(
                     "original"   => "blue",
                     "translated" => __("blue", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "None",
+                    "translated" => __("None", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "Border",
+                    "translated" => __("Border", "mesmerize-companion"),
                 ),
                 array(
                     "original"   => "border",
@@ -901,20 +1372,76 @@ class Translations
                     "original"   => "yellow",
                     "translated" => __("yellow", "mesmerize-companion"),
                 ),
+                array(
+                    "original"   => "overlappable",
+                    "translated" => __("overlappable", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "about",
+                    "translated" => __("about", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "features",
+                    "translated" => __("features", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "content",
+                    "translated" => __("content", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "counters",
+                    "translated" => __("counters", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "gallery",
+                    "translated" => __("gallery", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "portfolio",
+                    "translated" => __("portfolio", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "pricing",
+                    "translated" => __("pricing", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "testimonials",
+                    "translated" => __("testimonials", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "clients",
+                    "translated" => __("clients", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "team",
+                    "translated" => __("team", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "contact",
+                    "translated" => __("contact", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "woocommerce",
+                    "translated" => __("woocommerce", "mesmerize-companion"),
+                ),
+                array(
+                    "original"   => "subscribe",
+                    "translated" => __("subscribe", "mesmerize-companion"),
+                ),
             )
         );
     }
-    
-    
+
+
     static public function getTranslations()
     {
-        
+
         if ( ! static::$translationMap) {
             foreach (static::getStringsArray() as $match) {
                 static::$translationMap[$match['original']] = $match['translated'];
             }
         }
-        
+
         return static::$translationMap;
     }
 }

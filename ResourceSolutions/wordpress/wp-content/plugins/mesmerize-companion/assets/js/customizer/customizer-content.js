@@ -90,7 +90,7 @@
 
         function getNextDataId(start) {
             var dataIds = CP_Customizer.preview.getContentNodes().filter(function (item) {
-                return (item.tagName.toLowerCase() === 'div' && (item.getAttribute('data-id') || "").indexOf(start) === 0)
+                return (item.tagName.toLowerCase() === 'div' && item.getAttribute('data-id') && (item.getAttribute('data-id') || "").indexOf(start) === 0)
             }).map(function (item) {
                 return item.getAttribute('data-id')
             });
@@ -171,10 +171,12 @@
         });
 
         $sectionsList.on('click', '.full_row .item-remove', function (event) {
+
             event.preventDefault();
             var sectionID = $(this).parents('.item').data('id');
             var node = CP_Customizer.preview.getSectionByDataId(sectionID);
             var exportID = CP_Customizer.preview.getNodeExportId(node);
+            var anchor = node.attr('id');
 
             $(this).parents('.item').fadeOut(200);
             CP_Customizer.hooks.doAction('before_section_remove', $(node));
@@ -183,6 +185,12 @@
 
             $('[data-type="row-list-control"] [data-name="page_content"] [data-id="' + exportID + '"]').removeClass('already-in-page');
             CP_Customizer.updateState(false, false);
+            CP_Customizer.overlays.hideMovableOverlays();
+
+            if (CP_Customizer.menu.anchorExistsInPrimaryMenu(anchor)) {
+                CP_Customizer.menu.removeAnchorFromPrimaryMenu(anchor);
+            }
+
         });
 
 
@@ -521,6 +529,103 @@
             }
 
             $item[0].scrollIntoViewIfNeeded();
+        });
+
+        function maybeLinkableItem(node, selector) {
+            return (node.is(selector) || node.is('a') && node.children(selector).length && node.children().length === 1);
+        }
+
+        function maybeLinkableImage(node) {
+            if (!node.closest(CP_Customizer.preview.getRootNode()).length) {
+                return false;
+            }
+
+
+            var linkableImg = maybeLinkableItem(node, 'img'),
+                linkableIcon = maybeLinkableItem(node, 'i.fa');
+
+            return (linkableImg || linkableIcon);
+        }
+
+        // TODO: Needs refactoring. This should be a filter not a direct function
+        function imageGroupAnchorClass(node) {
+            var additional_class = '';
+
+            if (node.parent().hasClass('image-group-bottom-3')) {
+                if (node.hasClass('left-img')) {
+                    additional_class = 'left-img-anchor';
+                }
+                if (node.hasClass('center-img')) {
+                    additional_class = 'center-img-anchor';
+                }
+                if (node.hasClass('right-img')) {
+                    additional_class = 'right-img-anchor';
+                }
+            }
+            if (node.parent().hasClass('image-group-2-img')) {
+                if (node.hasClass('img-1')) {
+                    additional_class = 'img-1-anchor';
+                }
+                if (node.hasClass('img-2')) {
+                    additional_class = 'img-2-anchor';
+                }
+            }
+            if (node.parent().hasClass('image-group-bottom-3-img')) {
+                if (node.hasClass('left-img')) {
+                    additional_class = 'left-img-anchor';
+                }
+                if (node.hasClass('center-img')) {
+                    additional_class = 'center-img-anchor';
+                }
+                if (node.hasClass('right-img')) {
+                    additional_class = 'right-img-anchor';
+                }
+            }
+
+            return (additional_class ? 'class="' + additional_class + '"' : '');
+        }
+
+
+        function setToolbarLinkButton(toolbar, node) {
+            var _class, _title;
+
+            if (node.is('a')) {
+                _class = 'fa-chain-broken';
+                _title = 'Remove Image Link';
+            } else {
+                _class = 'fa-link';
+                _title = 'Add Image Link';
+            }
+
+            toolbar.addToolbarItem({
+                'name': 'image-link',
+                'icon': _class,
+                'title': _title,
+                'onClick': function () {
+                    if (!node.is('a')) {
+                        node.wrap('<a data-cp-link="1" href="#" ' + imageGroupAnchorClass(node) + '></a>');
+                        node = node.parent();
+                        this.setIcon('fa-chain-broken');
+                        setTimeout(function () {
+                            node.trigger('click');
+                        }, 0);
+                    } else {
+                        node = node.children();
+                        node.unwrap();
+                        this.setIcon('fa-link');
+                    }
+
+                    CP_Customizer.preview.markNode(node);
+                    CP_Customizer.preview.decorateElements(node);
+                    CP_Customizer.updateState()
+                }
+            });
+        }
+
+        CP_Customizer.hooks.addAction('node_hover_overlay_updated', function (node, overlay, toolbar) {
+            if (maybeLinkableImage(node)) {
+                setToolbarLinkButton(toolbar, node);
+            }
         });
 
     });

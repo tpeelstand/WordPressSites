@@ -9,7 +9,7 @@
 
 
             var val = this.getValue();
-           
+
             this.container.on('click', 'button, .webgradient-icon-preview .webgradient', function () {
                 Mesmerize.openMediaCustomFrame(
                     wp.media.cp.extendFrameWithWebGradients({

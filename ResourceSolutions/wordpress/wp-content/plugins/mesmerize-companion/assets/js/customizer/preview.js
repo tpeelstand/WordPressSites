@@ -29,6 +29,11 @@
 
 
 jQuery.fn.addFixedOverlay = function (options) {
+
+    if (!parent.CP_Customizer) {
+        return;
+    }
+
     var $ = jQuery;
     var root = parent;
     options = $.extend(true, {
@@ -138,6 +143,10 @@ var __addedSettings = [];
 
 function liveUpdateAutoSetting(setting, callback) {
 
+    if (!parent.CP_Customizer) {
+        return;
+    }
+
     if (__addedSettings.indexOf(setting) !== -1) {
         return;
     }
@@ -185,7 +194,7 @@ function bindLiveUpdates(root, $) {
         var self = $(this);
         liveUpdateAutoSetting(option, function (to) {
             var classAttr = self.attr('class');
-            var newClassAttr = classAttr.replace(/fa\-[a-z\-]+/ig, "").replace(/\s[\s]+/ig, " ").trim() + " " + to;
+            var newClassAttr = classAttr.replace(/fa\-[a-z0-9\-]+/ig, "").replace(/\s[\s]+/ig, " ").trim() + " " + to;
             self.attr('class', newClassAttr);
         });
     });
@@ -215,7 +224,7 @@ jQuery(document).ready(function ($) {
         wp.customize.mutationObserver.disconnect();
     }
     // if page is not maintainable with companion do not decorate
-    if (!parent.CP_Customizer.preview.data().maintainable) {
+    if (parent.CP_Customizer && !parent.CP_Customizer.preview.data().maintainable) {
         return;
     }
 

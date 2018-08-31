@@ -5,16 +5,14 @@ add_action("mesmerize_header_background_overlay_settings", function ($section, $
     $header_class = $inner ? ".header" : ".header-homepage:not(.header-slide)";
 
     mesmerize_add_kirki_field(array(
-        'type'    => 'select',
-        'label'   => esc_html__('Overlay Shapes', 'mesmerize'),
-        'section' => $section,
-
-        'settings' => $prefix . '_overlay_shape',
-        'default'  => $inner ? "circles" : "none",
-        'priority' => $priority,
-        'choices'  => mesmerize_get_header_shapes_overlay(),
-
-
+        'type'      => 'select',
+        'label'     => esc_html__('Overlay Shapes', 'mesmerize'),
+        'section'   => $section,
+        'settings'  => $prefix . '_overlay_shape',
+        'default'   => mesmerize_mod_default($prefix . '_overlay_shape'),
+        'priority'  => $priority,
+        'choices'   => mesmerize_get_header_shapes_overlay(),
+        'transport' => 'postMessage',
         'active_callback' => array(
             array(
                 'setting'  => $prefix . '_show_overlay',
@@ -68,6 +66,15 @@ add_action("mesmerize_header_background_overlay_settings", function ($section, $
 }, 1, 5);
 
 
+add_action('wp_ajax_mesmerize_shape_value', function () {
+
+    $value    = mesmerize_get_header_shape_overlay_value($_POST['shape']);
+    echo json_encode($value);
+    exit;
+
+});
+
+
 function mesmerize_get_header_shape_overlay_value($shape, $shapes = false)
 {
     if ( ! $shapes) {
@@ -105,7 +112,7 @@ function mesmerize_print_header_shape()
     $prefix       = $inner ? "inner_header" : "header";
     $theme_mod    = $prefix . '_overlay_shape';
 
-    $type = get_theme_mod($theme_mod, $inner ? "circles" : "none");
+    $type = get_theme_mod($theme_mod, mesmerize_mod_default($prefix . '_overlay_shape'));
 
     if ($type != "none") {
         $selector = $header_class . '.color-overlay:after';

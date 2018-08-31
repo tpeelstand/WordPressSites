@@ -4,12 +4,12 @@ namespace Mesmerize\Customizer;
 
 class Template
 {
-
+    
     public static function load($companion)
     {
         $themeWA      = $companion->getCustomizerData('data:widgets_areas');
         $widgetsAreas = apply_filters('cloudpress\template\widgets_areas', $themeWA);
-
+        
         if (is_array($widgetsAreas)) {
             foreach ($widgetsAreas as $data) {
                 self::addWidgetsArea($data);
@@ -17,18 +17,18 @@ class Template
         }
 
 //        add_filter('cloudpress\customizer\global_data', array(__CLASS__, '_prepareStaticSections'));
-
+        
         add_filter('the_content', array(__CLASS__, 'filterContent'), 0);
-
+        
         add_filter('template_include', array(__CLASS__, 'filterTemplateFile'));
-
+        
         // add_filter('do_shortcode_tag', array(__CLASS__, 'shortcodeTagFilter'), 10, 4);
-
+        
         // parse shortcodes make the clean for preview
         // add_filter('the_content', array(__CLASS__, 'decorateShortcodesInHTMLTags'), PHP_INT_MAX);
     }
-
-
+    
+    
     public static function shortcodeTagFilter($output, $tag, $attr, $m)
     {
         if (is_customize_preview()) {
@@ -54,10 +54,10 @@ class Template
                 $output      = "<!--$commentText-->" . $output . "<!--$commentText-->";
             }
         }
-
+        
         return $output;
     }
-
+    
     public static function decorateShortcodesInHTMLTags($content)
     {
         if (is_customize_preview()) {
@@ -66,78 +66,79 @@ class Template
                 $attr         = $matches[1];
                 $shortcodeBin = $matches[2];
                 $match        = $matches[0];
-
-
+                
+                
                 $match = str_replace("CPSHORTCODE___{$shortcodeBin}___", "", $match);
-
+                
                 $shortcode = hex2bin($shortcodeBin);
                 $shortcode = esc_attr($shortcode);
-
+                
                 $shortcodeAttr = " data-shortcode-{$attr}=\"{$shortcode}\" ";
-
+                
                 return $shortcodeAttr . $match;
             }, $content);
         }
-
+        
         return $content;
     }
-
+    
     public static function filterContent($content)
     {
         $companion = \Mesmerize\Companion::instance();
         if ($companion->isMaintainable()) {
             remove_filter('the_content', 'wpautop');
             remove_filter('the_content', 'gutenberg_wpautop', 8);
+            
             return Template::content($content, false);
         }
-
+        
         return $content;
     }
-
+    
     public static function filterTemplateFile($template)
     {
         global $post;
         $companion = \Mesmerize\Companion::instance();
-
+        
         $template = apply_filters('cloudpress\companion\template', $template, $companion, $post);
-
+        
         if ($post && $companion->isMaintainable($post->ID)) {
             $companion->loadMaintainablePageAssets($post, $template);
         }
-
+        
         return $template;
     }
-
-
+    
+    
     public static function _prepareStaticSections($globalData)
     {
         $globalData['contentSections'] = array();
-
+        
         foreach ($globalData['data']['sections'] as $section) {
-            $section['content'] = isset($section['content'])? $section['content'] : false;
+            $section['content']                            = isset($section['content']) ? $section['content'] : false;
             $section['content']                            = apply_filters('cloudpress\template\page_content', $section['content']);
             $globalData['contentSections'][$section['id']] = $section;
         }
-
+        
         return $globalData;
     }
-
+    
     public static function header($slug = "", $isMod = false, $modDefault = null)
     {
         if ($isMod) {
             $slug = get_theme_mod($slug, $modDefault);
         }
-
+        
         if (is_callable($slug)) {
             call_user_func($slug);
         } else {
             $slug = str_replace(".php", "", $slug);
-
+            
             if (locate_template("header-{$slug}.php", false)) {
                 get_header($slug);
             } else {
                 $slug = $slug . ".php";
-
+                
                 if (file_exists(\Mesmerize\Companion::instance()->themeDataPath($slug))) {
                     require_once \Mesmerize\Companion::instance()->themeDataPath($slug);
                 } else {
@@ -146,8 +147,8 @@ class Template
             }
         }
     }
-
-
+    
+    
     public static function content($content = null, $echo = true)
     {
         if ($content === null) {
@@ -159,23 +160,23 @@ class Template
             $content = ob_get_clean();
         } else {
             // inside the filter
-
+            
             if (is_customize_preview()) {
                 $settingContent = get_theme_mod('page_content', array());
-                if ($settingContent && is_string($settingContent) && !empty($settingContent)) {
+                if ($settingContent && is_string($settingContent) && ! empty($settingContent)) {
                     $settingContent = json_decode($settingContent, true);
                 }
-
+                
                 $pageId = get_the_ID();
-                if ($settingContent && !empty($settingContent) && isset($settingContent[$pageId])) {
+                if ($settingContent && ! empty($settingContent) && isset($settingContent[$pageId])) {
                     $content = $settingContent[$pageId];
                     $content = preg_replace(\Mesmerize\Customizer\Settings\ContentSetting::$pageIDRegex, "", $content);
                 }
-
+                
                 // add a data-cpid attr to all nodes inside the page.
                 // the unmkared nodes will be removed on save 
                 $parts = wp_html_split($content);
-
+                
                 $index = 0;
                 foreach ($parts as &$part) {
                     $part2 = trim($part);
@@ -184,40 +185,40 @@ class Template
                         $index++;
                     }
                 }
-
+                
                 $content = implode('', $parts);
             }
-
+            
             $content = apply_filters('cloudpress\template\page_content', $content);
-		    if (is_customize_preview()) {
-            $content = "<style id='cp_customizer_content_area_start'></style>" . $content;
-		    }
+            if (is_customize_preview()) {
+                $content = "<style id='cp_customizer_content_area_start'></style>" . $content;
+            }
         }
-
+        
         if ($echo) {
             echo $content;
         } else {
             return $content;
         }
     }
-
+    
     public static function footer($slug = "", $isMod = false, $modDefault = null)
     {
         if ($isMod) {
             $slug = get_theme_mod($slug, $modDefault);
         }
-
+        
         if (is_callable($slug)) {
             call_user_func($slug);
         } else {
             $slug = str_replace(".php", "", $slug);
-
+            
             if (locate_template("footer-{$slug}.php", false)) {
                 get_footer($slug);
             } else {
-
+                
                 $slug = $slug . ".php";
-
+                
                 if (file_exists(\Mesmerize\Companion::instance()->themeDataPath($slug))) {
                     require_once \Mesmerize\Companion::instance()->themeDataPath($slug);
                 } else {
@@ -226,18 +227,18 @@ class Template
             }
         }
     }
-
+    
     private static function preSetWidget($sidebar, $name, $args = array())
     {
-        if (!$sidebars = get_option('sidebars_widgets')) {
+        if ( ! $sidebars = get_option('sidebars_widgets')) {
             $sidebars = array();
         }
-
+        
         // Create the sidebar if it doesn't exist.
-        if (!isset($sidebars[$sidebar])) {
+        if ( ! isset($sidebars[$sidebar])) {
             $sidebars[$sidebar] = array();
         }
-
+        
         // Check for existing saved widgets.
         if ($widget_opts = get_option("widget_$name")) {
             // Get next insert id.
@@ -253,11 +254,11 @@ class Template
         $widget_opts[++$insert_id] = $args;
         // Add our widget!
         $sidebars[$sidebar][] = "$name-$insert_id";
-
+        
         update_option('sidebars_widgets', $sidebars);
         update_option("widget_$name", $widget_opts);
     }
-
+    
     public static function addWidgetsArea($data)
     {
         add_action('widgets_init', function () use ($data) {
@@ -269,24 +270,24 @@ class Template
                 'before_title'  => '<h4>',
                 'after_title'   => '</h4>',
             ));
-
+            
             $active_widgets = get_option('sidebars_widgets');
             $index          = count($active_widgets) + 1;
             if (empty($active_widgets[$data['id']]) && get_theme_mod('first_time_widget_' . $data['id'], true)) {
                 set_theme_mod('first_time_widget_' . $data['id'], false);
-
+                
                 $widget_content = array(
                     'title'  => __($data['title'], 'cloudpress-companion-companion'),
                     'text'   => '<ul><li><a href="http://#">Documentation</a></li><li><a href="http://#">Forum</a></li><li><a href="http://#">FAQ</a></li><li><a href="http://#">Contact</a></li></ul>',
                     'filter' => false,
                 );
-
+                
                 self::preSetWidget($data['id'], 'text', $widget_content);
             }
-
+            
         });
     }
-
+    
     public static function getWidgetsArea($id)
     {
         ob_start(); ?>
@@ -295,10 +296,10 @@ class Template
         </div>
         <?php ;
         $content = ob_get_clean();
-
+        
         return trim($content);
     }
-
+    
     public static function getModsData($mods)
     {
         $results = array();
@@ -307,35 +308,35 @@ class Template
             $value         = \Mesmerize\Companion::filterDefault($value);
             $results[$mod] = $value;
         }
-
+        
         return $results;
     }
-
+    
     public static function loadThemeModPartial($mod, $default = '', $data = null, $once = true)
     {
         if (empty($default)) {
             $default = '[tag_companion_dir]/partials/header/default';
         }
-
+        
         $template_file = \Mesmerize\Companion::getThemeMod($mod, $default);
         $template_file = \Mesmerize\Companion::filterDefault($template_file);
         $template_file = str_replace('.php', '', $template_file) . ".php";
-
+        
         if (is_array($data)) {
             extract($data);
         }
-
+        
         // wordpess date_defaults
         global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
-
+        
         if (is_array($wp_query->query_vars)) {
             extract($wp_query->query_vars, EXTR_SKIP);
         }
-
+        
         if (isset($s)) {
             $s = esc_attr($s);
         }
-
+        
         if ($once) {
             require_once($template_file);
         } else {

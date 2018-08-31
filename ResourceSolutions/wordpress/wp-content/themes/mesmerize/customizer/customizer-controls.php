@@ -640,7 +640,7 @@ class FrontPageSection extends \WP_Customize_Section
             <div class="sections-list-reorder">
                 <span class="customize-control-title"><?php _e('Manage page sections', 'mesmerize'); ?></span>
                 <ul id="page_full_rows" class="list list-order">
-                    <li class="empty"><?php _e('No section added', 'materialis') ?></li>
+                    <li class="empty"><?php _e('No section added', 'mesmerize') ?></li>
                 </ul>
                 <div class="add-section-container">
                     <a class="cp-add-section button-primary"><?php _e('Add Section', 'mesmerize'); ?></a>
@@ -649,7 +649,7 @@ class FrontPageSection extends \WP_Customize_Section
         </li>
 
         <script type="text/javascript">
-            jQuery(function () {
+            jQuery(function ($) {
                 jQuery('.companion-needed-section,.companion-needed-section > *').off();
 
                 jQuery('body').on('click', '.companion-needed-section h3', function (event) {
@@ -657,8 +657,8 @@ class FrontPageSection extends \WP_Customize_Section
                     event.stopPropagation();
                 });
 
-                $("#accordion-section-<?php echo esc_attr($this->id);?> .cp-add-section").click(function () {
-                    tb_show('Materialis Companion', '#TB_inline?width=400&height=430&inlineId=mesmerize_homepage');
+                jQuery("#accordion-section-<?php echo esc_attr($this->id);?> .cp-add-section").click(function () {
+                    tb_show('Mesmerize Companion', '#TB_inline?width=400&height=430&inlineId=mesmerize_homepage');
                     jQuery('#TB_closeWindowButton').hide();
                     jQuery('#TB_window').css({
                         'z-index': '5000001',

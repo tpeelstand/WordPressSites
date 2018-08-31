@@ -292,7 +292,7 @@
                                 }
                                 wp.customize.instance(name).set(value);
                             } else {
-                                if (type.match('kirki')) {
+                                if (type && type.match('kirki')) {
                                     kirkiSetSettingValue(name, value);
                                 } else {
                                     wp.customize.instance(name).set(value);

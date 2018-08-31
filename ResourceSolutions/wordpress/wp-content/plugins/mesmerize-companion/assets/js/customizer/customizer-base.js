@@ -63,7 +63,6 @@
     if (!NodeList.prototype.forEach) {
         NodeList.prototype.forEach = Array.prototype.forEach;
         HTMLCollection.prototype.forEach = Array.prototype.forEach; // Because of https://bugzilla.mozilla.org/show_bug.cgi?id=14869
-
     }
 
     if (!Array.from) {
@@ -94,14 +93,11 @@
         if (root.__mesmerizeCustomizerStrings[text] !== undefined) {
             return root.__mesmerizeCustomizerStrings[text];
         } else {
-            console.log("Not translatable: " + text);
-
-            //in debug mode
             if (CP_Customizer.options('SCRIPT_DEBUG')) {
-                return "[ Not translatable ] " + text;
-            } else {
-                return text;
+                console.log("[ Not translatable ] " + text);
             }
+
+            return text;
 
         }
     }
@@ -270,6 +266,10 @@
 
             options: function (key, defaultValue) {
 
+                if (!root.cpCustomizerGlobal) {
+                    return defaultValue;
+                }
+
                 if (!root.cpCustomizerGlobal.pluginOptions.data.sections) {
                     root.cpCustomizerGlobal.pluginOptions.data.sections = CP_Customizer.hooks.applyFilters('page_content_sections', null);
                 }
@@ -402,6 +402,8 @@
                 }
 
                 $(window).bind(event, callback);
+
+                return this;
             },
 
             off: function (event, callback) {
@@ -409,6 +411,8 @@
                     return 'cp_customizer.' + ev;
                 }).join(' ');
                 $(window).unbind(event, callback);
+
+                return this;
             },
 
             one: function (event, callback) {
@@ -418,6 +422,10 @@
                 $(window).one(event, callback);
             },
 
+            rebind: function (event, callback) {
+                this.off(event);
+                this.on(event, callback)
+            },
 
             trigger: function (event, data) {
                 $(window).trigger('cp_customizer.' + event, data);
@@ -1318,7 +1326,7 @@
 
                 this.preview.find("[data-theme-fa]").each(function () {
                     var prop = jQuery(this).attr('data-theme-fa');
-                    var val = jQuery(this).attr('class').match(/fa\-[a-z\-]+/ig).pop();
+                    var val = jQuery(this).attr('class').match(/fa\-[a-z0-9\-]+/ig).pop();
                     // root.CP_Customizer.setMod(prop, val.trim());
                     modsToSet[prop] = val.trim();
                 });
@@ -1809,7 +1817,7 @@
                 getNodeAbsSelector: function (node, relativeSelector) {
                     var section = this.getNodeSection(node),
                         sectionId = "[data-id='" + section.attr('data-id') + "']",
-                        absSelector = sectionId + ' ' + relativeSelector;
+                        absSelector = sectionId + ' ' + (relativeSelector || "");
 
                     return absSelector.replace(/\s\s?/, ' ').trim();
                 },
@@ -2176,12 +2184,13 @@
                     }
 
                     _.delay(function () {
-                        root.CP_Customizer.overlays.hoverOverlay().hide();
+                        root.CP_Customizer.overlays.hideMovableOverlays();
                         var addOverlay = root.CP_Customizer.overlays.addOverlay();
                         root.CP_Customizer.overlays.updateOverlay(addOverlay, addOverlay.data().node, false, true);
                     }, 10);
 
                     CP_Customizer.preview.restartObserver();
+
                 },
 
 
@@ -2454,6 +2463,9 @@
                         hoverOverlay.show();
 
                         var structureAllowsRemoving = (node.parents('[data-type=row]').length || node.parents('[data-type=column]').length)/* && node.siblings().length*/;
+                        var isFixed = (node.is('[data-fixed]') || node.parents('[data-fixed]').length);
+
+                        isFixed = CP_Customizer.hooks.applyFilters('is_fixed_element', isFixed, node);
 
                         if (structureAllowsRemoving && node.is(root.CP_Customizer.CONTENT_ELEMENTS)) {
                             hoverOverlay.find('.remove').show();
@@ -2487,7 +2499,8 @@
                                 hoverOverlay.hide();
                             }
                         } else {
-                            if (node.parents('[data-type=row]').length || node.parents('[data-type=column]').length) {
+                            var inRow = node.parents('[data-type=row]').length || node.parents('[data-type=column]').length;
+                            if (inRow && !node.is('[data-fixed]') && !node.closest('[data-fixed]').length) {
                                 hoverOverlay.find('.remove').show();
                             } else {
                                 hoverOverlay.find('.remove').hide();
@@ -2520,6 +2533,10 @@
 
 
                     $(document).on('mouseover.addoverlay', '.page-content [data-type="row"] > div, [data-theme] [data-type="row"] > div, .page-content [data-type="column"]', function () {
+
+                        if ($(this).closest("[data-type=\"row\"]").is('[data-fixed]')) {
+                            return;
+                        }
 
                         if ($(this).find('[data-type=column]').length) {
                             return;
@@ -2761,7 +2778,7 @@
                     }, 800));
 
                     $(window).bind('keydown', function (event) {
-                        if (event.ctrlKey || event.metaKey) {
+                        if (event.ctrlKey/* || event.metaKey*/) {
                             var key = String.fromCharCode(event.which).toLowerCase();
                             if (key === "s") {
                                 event.preventDefault();
@@ -2859,25 +2876,35 @@
                         CP_Customizer.overlays.addFixedOverlays($toDecorate);
                     });
 
+                    var $a = $container.find('a');
 
-                    $container.find('a').unbind('click').click(function (event) {
+                    if ($container.is('a')) {
+                        $a = $a.add($container);
+                    }
+
+                    $a.unbind('click').click(function (event) {
                         event.preventDefault();
                         event.stopImmediatePropagation();
                         event.stopPropagation();
 
                         if ($(this).is('[data-container-editable]') || $(this).is('[data-type=group]')) {
+
+                            if ($(this).parent().is(CP_Customizer.TEXT_ELEMENTS)) {
+                                return;
+                            }
                             self.editContainerData.apply(this);
                         }
 
                         return false;
                     });
+
                     var elements = $container.find(root.CP_Customizer.CONTENT_ELEMENTS).filter(function () {
                         return root.CP_Customizer.preview.data().maintainable;
                     });
 
                     if ($container.is(root.CP_Customizer.CONTENT_ELEMENTS)) {
                         if (elements.length) {
-                            elements.add($container);
+                            elements = elements.add($container);
                         } else {
                             elements = $container;
                         }
@@ -3072,6 +3099,13 @@
 
                 showTextElementCUI: function (node) {
                     CP_Customizer.preview.pauseObserver();
+
+
+                    $(node).on('click.cp_customizer', 'a', function (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        return false;
+                    });
 
                     $(node).off('paste.cp_customizer').on('paste.cp_customizer', function (event) {
                         var clipboardData = null;
@@ -3309,10 +3343,28 @@
                             "menubar": false,
                             "theme": "modern",
                             "skin": "lightgray",
-                            "toolbar": 'fontselect addwebfont font-weight font-size-popup | italic underline strikethrough superscript subscript alignment  font-color-popup | removeformat',
+                            "toolbar": 'fontselect addwebfont font-weight font-size-popup | link | italic underline strikethrough superscript subscript alignment  font-color-popup | removeformat',
                             "font_formats": this.getFonts().toTinyMCEFormat(),
                             "paste_as_text": true,
                             "forced_root_block": false,
+                            "plugins": "link",
+                            "link_title": false,
+                            "link_list": function (success) {
+                                var data = CP_Customizer.preview.find('[data-export-id]').toArray().reduce(function (acc, item) {
+                                    acc.push({
+                                        title: item.getAttribute('data-label'),
+                                        value: CP_Customizer.preview.data('pageURL') + "#" + item.getAttribute('id')
+                                    });
+                                    return acc;
+                                }, []);
+                                success(data);
+                            },
+                            "target_list": CP_Customizer.hooks.applyFilters('tinymce_target_list', [
+                                {title: CP_Customizer.translateCompanionString('Same page'), value: '_self'},
+                                {title: CP_Customizer.translateCompanionString('New page'), value: '_blank'},
+                                {title: CP_Customizer.translateCompanionString('Lightbox'), value: 'lightbox'}
+                            ]),
+
                             setup: function (ed) {
                                 var bm;
 
@@ -3320,6 +3372,7 @@
                                     type: 'listbox',
                                     text: root.CP_Customizer.translateCompanionString('Font Weight'),
                                     icon: false,
+                                    fixedWidth: true,
                                     onselect: function (e) {
                                         ed.formatter.apply('fontweight', {value: this.value()});
                                     },
@@ -3456,7 +3509,6 @@
                                             preferredFormat: "rgb",
                                             showInput: true,
                                             show: function () {
-                                                //console.log(this);
 
                                                 var colorPalette = CP_Customizer.hooks.applyFilters('spectrum_color_palette', []);
 
@@ -3541,6 +3593,10 @@
                                 updateOnEditorBlur = _.debounce(function (e) {
                                     _.delay(function () {
                                         var $node = $(e.target.bodyElement);
+                                        $node.find('a').each(function () {
+                                            $(this).attr('data-cp-link', '1');
+                                        });
+
                                         CP_Customizer.preview.markNode($node);
 
                                         if ($node.is('[data-theme]')) {
@@ -3630,86 +3686,83 @@
 
                 getOverlayOptionButton: getButtonElement,
 
-                addOptionsToFixedOverlay:
-                    function ($container, type, node, callback) {
-                        var typeOptions = this.__fixedOverlayOptions[type],
-                            $toAppend;
+                addOptionsToFixedOverlay: function ($container, type, node, callback) {
+                    var typeOptions = this.__fixedOverlayOptions[type],
+                        $toAppend;
 
-                        typeOptions = CP_Customizer.hooks.applyFilters('section_fixed_overlay_options', _.clone(typeOptions), type);
+                    typeOptions = CP_Customizer.hooks.applyFilters('section_fixed_overlay_options', _.clone(typeOptions), type);
 
-                        if (!typeOptions) {
-                            console.error('Undefined typeoptions', type, node);
-                            return;
-                        }
+                    if (!typeOptions) {
+                        console.error('Undefined typeoptions', type, node);
+                        return;
+                    }
 
-                        var jQuery = CP_Customizer.preview.jQuery();
-                        var _node = (typeOptions.nodeOverrider || _.identity)(node);
-                        for (var key in typeOptions) {
-                            var filteredOptions = CP_Customizer.hooks.applyFilters('section_fixed_overlay', typeOptions[key], key);
-                            if (typeOptions.hasOwnProperty(key)) {
-                                switch (key) {
-                                    case 'title':
-                                        $toAppend = getTitleElement(filteredOptions, _node, type);
-                                        if ($toAppend) {
-                                            $container.append($toAppend);
-                                        }
-                                        break;
-                                    case 'items':
-                                        $toAppend = getItemsElements(filteredOptions, _node, type);
+                    var jQuery = CP_Customizer.preview.jQuery();
+                    var _node = (typeOptions.nodeOverrider || _.identity)(node);
+                    for (var key in typeOptions) {
+                        var filteredOptions = CP_Customizer.hooks.applyFilters('section_fixed_overlay', typeOptions[key], key);
+                        if (typeOptions.hasOwnProperty(key)) {
+                            switch (key) {
+                                case 'title':
+                                    $toAppend = getTitleElement(filteredOptions, _node, type);
+                                    if ($toAppend) {
                                         $container.append($toAppend);
-                                        break;
-                                    case 'node_binds':
-                                        var nodeBinds = filteredOptions;
-                                        jQuery.each(nodeBinds, function (bind, callbacks) {
-                                            if (bind === "hover") {
-                                                _node.hover(
-                                                    function (event) {
-                                                        callbacks[0].bind(this)(event, jQuery(this).data().overlay);
-                                                    },
-                                                    function (event) {
-                                                        var isNodeRelated = jQuery(this).data().overlay.find("*").andSelf().is(event.relatedTarget);
-                                                        if (isNodeRelated) {
-                                                            event.preventDefault();
-                                                            event.stopPropagation();
-                                                            return false;
-                                                        }
+                                    }
+                                    break;
+                                case 'items':
+                                    $toAppend = getItemsElements(filteredOptions, _node, type);
+                                    $container.append($toAppend);
+                                    break;
+                                case 'node_binds':
+                                    var nodeBinds = filteredOptions;
+                                    jQuery.each(nodeBinds, function (bind, callbacks) {
+                                        if (bind === "hover") {
+                                            _node.hover(
+                                                function (event) {
+                                                    callbacks[0].bind(this)(event, jQuery(this).data().overlay);
+                                                },
+                                                function (event) {
+                                                    var isNodeRelated = jQuery(this).data().overlay.find("*").andSelf().is(event.relatedTarget);
+                                                    if (isNodeRelated) {
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                        return false;
+                                                    }
 
-                                                        callbacks[1].bind(this)(event, jQuery(this).data().overlay);
-                                                    }
-                                                );
-                                            } else {
-                                                _node.bind(bind, callbacks);
-                                            }
-                                        });
-                                        break;
-                                    case 'toolbar_binds':
-                                        var toolbarBinds = typeOptions[key];
-                                        var overlay = jQuery(node).data().overlay;
-                                        jQuery.each(toolbarBinds, function (bind, callbacks) {
-                                            if (bind === "hover") {
-                                                overlay.find('.overlay-toolbar').hover(
-                                                    function (event) {
-                                                        callbacks[0].bind(node)(event, overlay);
-                                                    },
-                                                    function (event) {
-                                                        callbacks[1].bind(node)(event, overlay);
-                                                    }
-                                                );
-                                            } else {
-                                                overlay.bind(bind, callbacks);
-                                            }
-                                        });
-                                        break;
-                                }
+                                                    callbacks[1].bind(this)(event, jQuery(this).data().overlay);
+                                                }
+                                            );
+                                        } else {
+                                            _node.bind(bind, callbacks);
+                                        }
+                                    });
+                                    break;
+                                case 'toolbar_binds':
+                                    var toolbarBinds = typeOptions[key];
+                                    var overlay = jQuery(node).data().overlay;
+                                    jQuery.each(toolbarBinds, function (bind, callbacks) {
+                                        if (bind === "hover") {
+                                            overlay.find('.overlay-toolbar').hover(
+                                                function (event) {
+                                                    callbacks[0].bind(node)(event, overlay);
+                                                },
+                                                function (event) {
+                                                    callbacks[1].bind(node)(event, overlay);
+                                                }
+                                            );
+                                        } else {
+                                            overlay.bind(bind, callbacks);
+                                        }
+                                    });
+                                    break;
                             }
-                        }
-
-                        if (callback) {
-                            callback(typeOptions);
                         }
                     }
 
-                ,
+                    if (callback) {
+                        callback(typeOptions);
+                    }
+                },
 
                 updateOverlay: function (overlay, node, cover, positionOnly) {
                     var $ = root.CP_Customizer.preview.jQuery();
@@ -3801,6 +3854,11 @@
                             } else {
                                 overlay.find('.remove').hide();
                             }
+                        }
+
+                        if (overlay.is('.node-hover-overlay')) {
+                            overlay.data('toolbar').$element.children().hide();
+                            CP_Customizer.hooks.doAction('node_hover_overlay_updated', node, overlay, overlay.data('toolbar'));
                         }
 
                     }
@@ -3914,7 +3972,19 @@
                         return hoverOverlay;
                     }
 
-                    hoverOverlay = $('<div data-overlay="cp-hoveroverlay" class="node-hover-overlay"><div class="pen-overlay"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 20 20"><path d="M13.89 3.39l2.71 2.72c.46.46.42 1.24.03 1.64l-8.01 8.02-5.56 1.16 1.16-5.58s7.6-7.63 7.99-8.03c.39-.39 1.22-.39 1.68.07zm-2.73 2.79l-5.59 5.61 1.11 1.11 5.54-5.65zm-2.97 8.23l5.58-5.6-1.07-1.08-5.59 5.6z"></path></svg></div><span title="' + root.CP_Customizer.translateCompanionString("Move element") + '" class="move"></span><span title="' + root.CP_Customizer.translateCompanionString("Delete element") + '" class=" remove"></span><div class="overlay-top overlay-border"></div><div class="overlay-left overlay-border"></div><div class="overlay-right overlay-border"></div><div class="overlay-bottom overlay-border"></div></div>');
+                    hoverOverlay = $('<div data-overlay="cp-hoveroverlay" class="node-hover-overlay">' +
+                        '<div class="pen-overlay">' +
+                        '    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 20 20">' +
+                        '        <path d="M13.89 3.39l2.71 2.72c.46.46.42 1.24.03 1.64l-8.01 8.02-5.56 1.16 1.16-5.58s7.6-7.63 7.99-8.03c.39-.39 1.22-.39 1.68.07zm-2.73 2.79l-5.59 5.61 1.11 1.11 5.54-5.65zm-2.97 8.23l5.58-5.6-1.07-1.08-5.59 5.6z"></path>' +
+                        '    </svg>' +
+                        '</div>' +
+                        '<span title="' + root.CP_Customizer.translateCompanionString("Move element") + '" class="move"></span>' +
+                        '<span title="' + root.CP_Customizer.translateCompanionString("Delete element") + '" class=" remove"></span>' +
+                        '<div data-name="overlay-toolbar" class="hover-overlay-toolbar"></div>' +
+                        '<div class="overlay-top overlay-border"></div>' +
+                        '<div class="overlay-left overlay-border"></div>' +
+                        '<div class="overlay-right overlay-border"></div>' +
+                        '<div class="overlay-bottom overlay-border"></div></div>');
 
                     root.CP_Customizer.overlays.overlaysContainer().append(hoverOverlay);
                     hoverOverlay.hide();
@@ -4190,6 +4260,43 @@
                     //     hoverOverlay.removeClass('heatzone');
                     // };
 
+                    var toolbar = {
+                        $element: hoverOverlay.find('[data-name="overlay-toolbar"]'),
+                        __toolbarItems: {},
+                        addToolbarItem: function (data) {
+                            if (!this.__toolbarItems[data.name]) {
+                                data.$item = $('<i class="fa ' + data.icon + '" title="' + (data.title || "") + '" />');
+                                this.$element.append(data.$item);
+                                this.__toolbarItems[data.name] = data;
+                                data.setIcon = function (_class) {
+                                    data.$item.attr('class', 'fa ' + _class);
+                                }
+
+                                data.setTitle = function (_title) {
+                                    data.$item.attr('title', _title || "");
+                                }
+
+                            } else {
+                                data = _.extend(this.__toolbarItems[data.name], data);
+                                data.setTitle(data.title);
+                                data.setIcon(data.icon);
+                            }
+
+                            data.$item.off('click.cp_customizer_toolbar').on('click.cp_customizer_toolbar', function (event) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                data.onClick.call(data, [event]);
+                            });
+                            data.$item.show();
+                            return data;
+                        },
+                        getToolbarItem: function (name) {
+                            return this.__toolbarItems[name];
+                        }
+                    };
+
+                    hoverOverlay.data('toolbar', toolbar);
+
                     return hoverOverlay;
 
                 },
@@ -4284,6 +4391,12 @@
 
                     root.CP_Customizer.preview.hideTextElementCUI();
                     updateOverlay();
+                },
+
+                hideMovableOverlays: function () {
+                    CP_Customizer.overlays.addOverlay().hide();
+                    CP_Customizer.overlays.hoverOverlay().hide();
+                    CP_Customizer.overlays.rowItemHoverOverlay().hide()
                 }
 
             }
@@ -4296,7 +4409,7 @@
                             icon: 'fa-link',
                             tooltip: translateCompanionString('link'),
                             data:
-                            '<a class="link" data-cpid="new" data-container-editable="true" data-content-code-editable href="#">' + translateCompanionString('new link') + '</a>',
+                                '<a class="link" data-cpid="new" data-container-editable="true" data-content-code-editable href="#">' + translateCompanionString('new link') + '</a>',
                             'after': function ($item) {
                                 $item.unbind('click').click(function (event) {
                                     event.preventDefault();
@@ -4316,7 +4429,7 @@
                             icon: 'fa-external-link-square',
                             tooltip: translateCompanionString('button'),
                             data:
-                            '<a data-cpid="new" data-container-editable="true" data-content-code-editable class="button blue" href="#">' + translateCompanionString('new button') + '</a>',
+                                '<a data-cpid="new" data-container-editable="true" data-content-code-editable class="button blue" href="#">' + translateCompanionString('new button') + '</a>',
                             'after': function ($item) {
                                 $item.unbind('click').click(function (event) {
                                     event.preventDefault();
@@ -4592,7 +4705,7 @@
 
 
     $(root).bind('keydown', function (event) {
-        if (event.ctrlKey || event.metaKey) {
+        if (event.ctrlKey /*|| event.metaKey*/) {
             var key = String.fromCharCode(event.which).toLowerCase();
             if (key === "s") {
                 event.preventDefault();

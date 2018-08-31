@@ -16,7 +16,7 @@ function mesmerize_header_separator_options($section, $prefix, $group, $inner, $
         'label'    => esc_html__('Bottom Separator', 'mesmerize'),
         'section'  => $section,
         'settings' => $prefix . '_show_separator',
-        'default'  => $inner ? false : false,
+        'default'  => mesmerize_mod_default($prefix . '_show_separator'),
         'priority' => $priority,
         'active_callback' => apply_filters('mesmerize_header_active_callback_filter', array(), $inner),
     ));
@@ -55,7 +55,7 @@ function mesmerize_header_separator_options($section, $prefix, $group, $inner, $
         'settings'        => $prefix . '_separator',
         'label'           => esc_html__('Type', 'mesmerize'),
         'section'         => $section,
-        'default'         => 'mesmerize/1.wave-and-line',
+        'default'         => mesmerize_mod_default($prefix . '_separator'),
         'choices'         => mesmerize_get_separators_list(),
         'priority'        => $priority,
         'active_callback' => array(
@@ -78,7 +78,7 @@ function mesmerize_header_separator_options($section, $prefix, $group, $inner, $
         'choices'  => array(
             'alpha' => true,
         ),
-        'default'  => $inner ? "#F5FAFD" : "#ffffff",
+        'default'  => mesmerize_mod_default("{$prefix}_separator_color"),
         'output'   => array(
             array(
                 'element'  => $inner ? "body .header .svg-white-bg" : ".mesmerize-front-page .header-separator .svg-white-bg",
@@ -160,7 +160,7 @@ function mesmerize_header_separator_options($section, $prefix, $group, $inner, $
         'label'           => esc_html__('Height', 'mesmerize'),
         'section'         => $section,
         'settings'        => $prefix . '_separator_height',
-        'default'         => 154,
+        'default'         => mesmerize_mod_default($prefix . '_separator_height'),
         'transport'       => 'postMessage',
         'priority'        => $priority,
         'choices'         => array(
@@ -300,10 +300,10 @@ function mesmerize_print_header_separator($prefix = null)
         $prefix = $inner ? "inner_header" : "header";
     }
 
-    $show = get_theme_mod($prefix . '_show_separator', $inner ? false : false);
+    $show = get_theme_mod($prefix . '_show_separator', mesmerize_mod_default($prefix . '_show_separator'));
     if ($show) {
 
-        $separator = get_theme_mod($prefix . '_separator', 'mesmerize/1.wave-and-line');
+        $separator = get_theme_mod($prefix . '_separator', mesmerize_mod_default($prefix . '_separator'));
 
         $reverse = "";
 

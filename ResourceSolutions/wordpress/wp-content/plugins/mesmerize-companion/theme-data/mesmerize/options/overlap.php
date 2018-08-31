@@ -14,13 +14,14 @@ function mesmerize_front_page_header_overlap_options($section, $prefix, $group, 
     $group    = "";
 
     mesmerize_add_kirki_field(array(
-        'type'     => 'checkbox',
-        'settings' => 'header_overlap',
-        'label'    => esc_html__('Allow content to overlap header', 'mesmerize'),
-        'default'  => true,
-        'section'  => $section,
-        'priority' => $priority,
-        'group'    => $group,
+        'type'            => 'checkbox',
+        'settings'        => 'header_overlap',
+        'label'           => esc_html__('Allow content to overlap header', 'mesmerize'),
+        'default'         => mesmerize_mod_default('header_overlap'),
+        'section'         => $section,
+        'priority'        => $priority,
+        'group'           => $group,
+        'transport'       => 'postMessage',
         'active_callback' => apply_filters('mesmerize_header_active_callback_filter', array(), $inner),
     ));
 
@@ -28,7 +29,10 @@ function mesmerize_front_page_header_overlap_options($section, $prefix, $group, 
         'type'            => 'dimension',
         'settings'        => 'header_overlap_with',
         'label'           => esc_html__('Overlap with', 'mesmerize'),
+        'section'         => $section,
         'default'         => '95px',
+        'priority'        => $priority,
+        'transport'       => 'postMessage',
         'active_callback' => apply_filters('mesmerize_header_active_callback_filter',
             array(
                 array(
@@ -39,39 +43,58 @@ function mesmerize_front_page_header_overlap_options($section, $prefix, $group, 
             ),
             $inner, 'simple'
         ),
-        'section'         => $section,
-        'priority'        => $priority,
         'group'           => $group,
     ));
 }
 
+add_filter('body_class', function ($classes) {
 
+    $header_type = get_theme_mod('header_type', 'simple');
+
+    if ( ! in_array($header_type, array('simple', 'slider'))) {
+        return $classes;
+    } else {
+        // set overlap-first-section class depending on the header type
+        if ($header_type == 'simple') {
+            $overlap_mod = get_theme_mod('header_overlap', mesmerize_mod_default('header_overlap'));
+        }
+        if ($header_type == 'slider') {
+            $overlap_mod = get_theme_mod('slider_overlap_header', true);
+        }
+        if (1 == intval($overlap_mod)) {
+            $classes[] = "overlap-first-section";
+        }
+
+        return $classes;
+    }
+
+});
+
+// always print overlap properties, to avoid a bug when the customizer is loaded without allow overlap,
+// and checking the control will put the 'overlap-first-section' class on body, but the padding/negative margin wont be set
 add_action('wp_head', function () {
-    $margin      = get_theme_mod('header_overlap_with', '95px');
-    $overlap_mod = get_theme_mod('header_overlap', true);
-    if (1 == intval($overlap_mod)): ?>
-        <style data-name="overlap">
-            @media only screen and (min-width: 768px) {
-                .mesmerize-front-page:not(.mesmerize-front-page-with-slider) .header-homepage {
-                    padding-bottom: <?php echo  esc_attr($margin); ?>;
-                }
 
-                .mesmerize-front-page:not(.mesmerize-front-page-with-slider) .content {
-                    position: relative;
-                    z-index: 10;
-                }
+    $inner = mesmerize_is_inner(true);
 
-                .mesmerize-front-page:not(.mesmerize-front-page-with-slider) .page-content div[data-overlap]:first-of-type > div:first-of-type {
-                    margin-top: -<?php echo  esc_attr($margin); ?>;
-                    background: transparent !important;
-                    position: relative;
-                }
+    // only print style for simple header type, slider doesn't need this style
+    if ($inner || (get_theme_mod('header_type', 'simple') !== 'simple')) {
+        return;
+    }
 
-                .page-template:not(.mesmerize-front-page-with-slider) [data-overlap="true"]:first-of-type {
-                    padding-top: 0;
-                }
+    $overlap_with = get_theme_mod('header_overlap_with', '95px');
+    $selector     = '.mesmerize-front-page.overlap-first-section:not(.mesmerize-front-page-with-slider)';
+
+    ?>
+    <style data-name="header-overlap-with">
+        @media screen and (min-width: 768px) {
+            <?php echo esc_attr($selector); ?> .header-homepage {
+                padding-bottom: <?php echo esc_attr($overlap_with); ?>;
             }
-        </style>
-        <?php
-    endif;
+
+            <?php echo esc_attr($selector); ?> .page-content div[data-overlap]:first-of-type > div:not([class*="section-separator"]) {
+                margin-top: -<?php echo esc_attr($overlap_with); ?>;
+            }
+        }
+    </style>
+    <?php
 });

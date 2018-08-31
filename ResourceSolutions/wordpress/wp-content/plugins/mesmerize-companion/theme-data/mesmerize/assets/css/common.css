@@ -8,8 +8,6 @@
     color: #ffffff;
 }
 
-
-
 div#fancybox-overlay {
     display: none;
 }
@@ -78,10 +76,6 @@ div#fancybox-overlay {
     vertical-align: middle;
 }
 
-[data-overlap="true"] > div {
-    background: #ffffff;
-}
-
 [data-reiki-hidden="true"] {
     display: none !important;
 }
@@ -106,6 +100,10 @@ div#fancybox-overlay {
 }
 
 .prepare-ss [data-id] {
-    border-top:30px solid black !important;
-    border-bottom:30px solid black !important;
+    border-top: 30px solid black !important;
+    border-bottom: 30px solid black !important;
+}
+
+.page-template:not(.mesmerize-front-page-with-slider) [data-overlap="true"]:first-of-type {
+    padding-top: 0;
 }

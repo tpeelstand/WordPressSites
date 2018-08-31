@@ -212,7 +212,6 @@ if ( ! function_exists('mesmerize_print_header_media')) {
         
         do_action('mesmerize_print_header_media', $mediaType);
         
-        
     }
 }
 
@@ -229,19 +228,17 @@ function mesmerize_get_header_top_spacing_script()
             function setHeaderTopSpacing() {
 
                 var headerTop = document.querySelector('.header-top');
-                document
-                    .querySelectorAll('.header-wrapper .header,.header-wrapper .header-homepage')
-                    .forEach(function (item) {
-                        item.style.paddingTop = headerTop.getBoundingClientRect().height + "px";
-                    });
+                var headers = document.querySelectorAll('.header-wrapper .header,.header-wrapper .header-homepage');
+
+                for (var i = 0; i < headers.length; i++) {
+                    var item = headers[0];
+                    item.style.paddingTop = headerTop.getBoundingClientRect().height + "px";
+                }
             }
 
             window.addEventListener('resize', setHeaderTopSpacing);
-
-            window.addEventListener('resize', setHeaderTopSpacing);
-
             window.mesmerizeSetHeaderTopSpacing = setHeaderTopSpacing
-
+            mesmerizeDomReady(setHeaderTopSpacing);
         })();
     </script>
     <?php
@@ -278,7 +275,7 @@ function mesmerize_print_background_content_color()
         .mesmerize-inner-page .page-content,
         .mesmerize-inner-page .content,
         .mesmerize-front-page.mesmerize-content-padding .page-content {
-            background-color: #<?php echo str_replace("#", "", get_background_color());  ?>;
+            background-color: #<?php echo str_replace("#", "", (get_background_color() ? get_background_color() : 'F5FAFD'));  ?>;
         }
     </style>
     <?php

@@ -15,8 +15,9 @@ add_action('mesmerize_add_sections', function ($wp_customize) {
 
     foreach ($sections as $id => $title) {
         $wp_customize->add_section($id, array(
-            'title' => $title,
-            'panel' => 'navigation_panel',
+            'title'    => $title,
+            'panel'    => 'navigation_panel',
+            'priority' => 1
         ));
     }
 

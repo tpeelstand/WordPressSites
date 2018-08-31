@@ -102,17 +102,16 @@
         "mesmerize_contact_form",
         {
             "shortcode": {
+                
                 control: {
                     label: window.CP_Customizer.translateCompanionString("3rd party form shortcode"),
                     type: "text",
                     setParse: function (value) {
-                        return value.replace(/^\[+/, '').replace(/\]+$/, '');
+                        return value.trim().replace(/^\[+/, '').replace(/\]+$/, '');
                     },
 
                     getParse: function (value) {
-
-                        var val = value.replace(/^\[+/, '').replace(/\]+$/, '');
-
+                        var val = value.trim().replace(/^\[+/, '').replace(/\]+$/, '');
                         if (!val) return "";
                         return "[" + CP_Customizer.utils.htmlDecode(val) + "]";
                     }

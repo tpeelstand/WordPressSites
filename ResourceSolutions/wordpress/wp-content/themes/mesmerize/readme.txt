@@ -162,23 +162,23 @@ The exceptions to this license are as follows:
   * images/video-poster.jpg
   * customizer/images/admin-onboarding.jpg
 
-	* assets/images/header-shapes/circles.png			
+	* assets/images/header-shapes/circles.png
 
-	* assets/separators/mesmerize1.wave-and-line-negative.svg		
+	* assets/separators/mesmerize1.wave-and-line-negative.svg
 	* assets/separators/mesmerize5.triple-waves-3-negative.svg
-	* assets/separators/mesmerize1.wave-and-line.svg			
+	* assets/separators/mesmerize1.wave-and-line.svg
 	* assets/separators/mesmerize5.triple-waves-3.svg
-	* assets/separators/mesmerize2.middle-waves-horizontal-flipped.svg	
+	* assets/separators/mesmerize2.middle-waves-horizontal-flipped.svg
 	* assets/separators/mesmerize6.triple-waves-2-negative.svg
-	* assets/separators/mesmerize2.middle-waves.svg			
+	* assets/separators/mesmerize2.middle-waves.svg
 	* assets/separators/mesmerize6.triple-waves-2.svg
-	* assets/separators/mesmerize2a.middle-waves-negative.svg		
+	* assets/separators/mesmerize2a.middle-waves-negative.svg
 	* assets/separators/mesmerize7.stright-angles-1-negative.svg
-	* assets/separators/mesmerize2a.middle-waves.svg			
+	* assets/separators/mesmerize2a.middle-waves.svg
 	* assets/separators/mesmerize7.stright-angles-1.svg
-	* assets/separators/mesmerize3.waves-noCentric-negative.svg		
+	* assets/separators/mesmerize3.waves-noCentric-negative.svg
 	* assets/separators/mesmerize8.stright-angles-2-negative.svg
-	* assets/separators/mesmerize3.waves-noCentric.svg			
+	* assets/separators/mesmerize3.waves-noCentric.svg
 	* assets/separators/mesmerize8.stright-angles-2.svg
 	* assets/separators/mesmerize4.clouds.svg
 

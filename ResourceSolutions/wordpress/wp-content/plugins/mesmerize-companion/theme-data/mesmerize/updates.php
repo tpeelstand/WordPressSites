@@ -44,7 +44,9 @@ function mesmerize_get_available_updates()
     
     $themes = get_theme_updates();
     
-    if ($themes && isset($themes['mesmerize-pro'])) {
+    $current_theme = get_template();
+    
+    if ($themes && isset($themes['mesmerize-pro']) && 'mesmerize-pro' === $current_theme) {
         $theme = $themes['mesmerize-pro'];
         
         $current_version = $theme->get('Version');
@@ -60,10 +62,11 @@ function mesmerize_get_available_updates()
         }
     }
     
-    if ($themes && isset($themes['mesmerize'])) {
+    if ($themes && isset($themes['mesmerize']) && 'mesmerize' === $current_theme) {
         $theme                  = $themes['mesmerize'];
         $needs_update['themes'] = isset($needs_update['themes']) ? $needs_update['themes'] : array();
-        $current_version        = $theme->get('Version');
+        /** @var WP_Theme $theme */
+        $current_version = $theme->get('Version');
         
         if (version_compare($current_version, $theme->update['new_version'], "<")) {
             if (strtolower($current_version) !== "@@buildnumber@@") {

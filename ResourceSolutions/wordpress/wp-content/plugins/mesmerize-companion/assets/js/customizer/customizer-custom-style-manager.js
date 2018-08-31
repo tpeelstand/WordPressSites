@@ -347,6 +347,14 @@
             });
 
             return parts
+        },
+
+        getRGBAStringTransparency: function (color) {
+
+          var transparency = tinycolor(color).getAlpha();
+
+          return transparency;
+
         }
     }
 

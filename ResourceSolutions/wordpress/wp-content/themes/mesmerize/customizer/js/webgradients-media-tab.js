@@ -206,7 +206,7 @@
         className: "cp-fa-media attachments-browser",
 
         initialize: function () {
-     
+
             var browserVIew = this;
             _.defaults(this.options, {
                 filters: !1,

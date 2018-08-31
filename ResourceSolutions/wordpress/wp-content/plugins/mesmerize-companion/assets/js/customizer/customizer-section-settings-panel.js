@@ -5,7 +5,7 @@
             var item = {
 
                 name: "section_more_settings_button",
-                title:  window.CP_Customizer.translateCompanionString("Section Settings"),
+                title: window.CP_Customizer.translateCompanionString("Section Settings"),
 
                 on_click: function (node) {
                     var section = node;
@@ -161,7 +161,7 @@
                     $container,
                     '<span>' + window.CP_Customizer.translateCompanionString("More section design options available in PRO") + '</span><br/> ' +
                     '<a href="https://extendthemes.com/go/mesmerize-upgrade/" class="button button-small button-orange upgrade-to-pro" target="_blank">' +
-                     '' + window.CP_Customizer.translateCompanionString("Check all PRO features") + '</a>'
+                    '' + window.CP_Customizer.translateCompanionString("Check all PRO features") + '</a>'
                 )
             },
             update: function (data) {
@@ -264,7 +264,7 @@
                     $container,
                     {
                         value: '',
-                        label:  window.CP_Customizer.translateCompanionString('Content align'),
+                        label: window.CP_Customizer.translateCompanionString('Content align'),
                         choices: {
                             'content-align-default': window.CP_Customizer.translateCompanionString('Default'),
                             'content-left-sm': window.CP_Customizer.translateCompanionString('Left'),
@@ -335,7 +335,7 @@
                 this.addToControlsList(frameType);
                 var frameColor = CP_Customizer.createControl.color(this.getPrefixed('color'), $groupEl, {
                     value: '#ffffff',
-                    label:  window.CP_Customizer.translateCompanionString('Color')
+                    label: window.CP_Customizer.translateCompanionString('Color')
                 });
 
                 this.addToControlsList(frameColor);

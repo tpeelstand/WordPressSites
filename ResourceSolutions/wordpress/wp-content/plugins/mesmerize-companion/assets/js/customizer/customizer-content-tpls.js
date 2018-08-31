@@ -24,7 +24,6 @@
     window.CP_Customizer.addModule(function (CP_Customizer) {
         var contentTemplates = {
             text: getCPTemplate("text"),
-
             'text-with-checkbox': getCPTemplate("text-with-checkbox"),
             link: getCPTemplate("link"),
             image: getCPTemplate("image"),
